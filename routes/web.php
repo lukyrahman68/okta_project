@@ -14,6 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/tes', function () {
-    return view('layouts.back_end');
+
+Route::get('/tes2', function () {
+    return view('pemilik.index');
 });
+Route::group(['middleware' => ['auth']], function() {
+    // your routes
+    Route::get('/admin', function () {
+        return view('karyawan.index');
+    });
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

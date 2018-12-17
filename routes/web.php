@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/admin', function () {
         return view('karyawan.index');
     });
+    Route::resource('pelanggan', 'PelangganController');
 });
 Auth::routes();
 

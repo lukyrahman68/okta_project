@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,7 +21,12 @@ Route::get('/tes2', function () {
 Route::group(['middleware' => ['auth']], function() {
     // your routes
     Route::get('/admin', function () {
-        return view('karyawan.index');
+    $user = Auth::user();
+        if (!$user->is_owner) {
+            return view('karyawan.index');
+        } else {
+            return view('pemilik.index');
+        }
     });
     Route::resource('pelanggan', 'PelangganController');
 });

@@ -15,7 +15,7 @@ class CretaeTableMedias extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_pelanggan');
+            $table->integer('pelanggan_id');
             $table->string('nama');
             $table->string('ket');
             $table->timestamps();

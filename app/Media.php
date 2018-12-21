@@ -8,7 +8,7 @@ class Media extends Model
 {
     //
     protected $fillable = [
-        'id_pelanggan',
+        'pelanggan_id',
         'nama',
         'ket'
     ];

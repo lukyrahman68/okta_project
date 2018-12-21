@@ -8,7 +8,6 @@ class Pelanggan extends Model
 {
     //
     protected $fillable = [
-        'photo_ktp',
         'nik',
         'nama',
         'alamat',
@@ -17,4 +16,7 @@ class Pelanggan extends Model
         'tlpn',
         'email'
     ];
+    public function media(){
+        return $this->hasMany('App\Media');
+    }
 }

@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth']], function() {
         }
     });
     Route::resource('pelanggan', 'PelangganController');
+    Route::post('img/{id}', 'PelangganController@ubah_img')->name('ubah_img');
+    Route::post('img/{id}/add', 'PelangganController@add_img')->name('add_img');
+    Route::get('img/{id}/delete', 'PelangganController@delete_img')->name('delete_img');
 });
 Auth::routes();
 

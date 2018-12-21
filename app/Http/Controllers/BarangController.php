@@ -18,6 +18,22 @@ class BarangController extends Controller
         return view('karyawan.vendor.barang.create',compact('vendors'));
     }
     public function store(request $request){
-
+        Barang::create($request->all());
+        return redirect()->route('barang.index');
+    }
+    public function edit($id){
+        $barang = Barang::findOrFail($id);
+        $vendors = Vendor::all(['nama', 'id']);
+        return view('karyawan.vendor.barang.edit',compact('barang','vendors'));
+    }
+    public function update(request $request, $id){
+        $barang = Barang::findOrFail($id);
+        $barang->update($request->all());
+        return redirect()->route('barang.index');
+    }
+    public function destroy($id){
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+        return redirect()->route('barang.index');
     }
 }

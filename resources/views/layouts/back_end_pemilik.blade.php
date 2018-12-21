@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   {{-- data table --}}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -139,28 +140,7 @@
       <li class="header">MAIN NAVIGATION</li>
       <li>
         <a href="{{route('pelanggan.index')}}">
-          <i class="fa fa-th"></i> <span>Pelanggan</span>
-          <span class="pull-right-container">
-            <small class="label pull-right bg-green">new</small>
-          </span>
-        </a>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-pie-chart"></i>
-          <span>Vendor</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="{{route('vendor.index')}}"><i class="fa fa-circle-o"></i> Data Vendor</a></li>
-          <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> Barang Vendor</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="{{route('kredit.index')}}">
-          <i class="fa fa-th"></i> <span>Pengajuan Kredit</span>
+          <i class="fa fa-th"></i> <span>Hasil Survey</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
@@ -549,39 +529,12 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
-{{-- ajax --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
+{{-- data table --}}
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
-        $('#cari').click(function(){
-            $.ajax({
-                type: 'post',
-                url: '/kredit/cari',
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'id': $('input[name=id]').val()
-                },
-                success: function(data) {
-                    if ((data.errors)){
-                    $('.error').removeClass('hidden');
-                        $('.error').text(data.errors.name);
-                    }
-                    else {
-                        $('.error').addClass('hidden');
-                        var div = document.getElementById('body');
-                        div.innerHTML += '<hr><div class="form-group"><label>Nama Vendor</label><input type="text" class="form-control" placeholder="Nama Vendor" name="nama" value="'+data.nama+'"></div><div class="form-group"><label>Alamat</label><input type="text" class="form-control" placeholder="Alamat" name="alamat" value="'+data.alamat+'"></div><div class="form-group"><label>No Telphone</label><input type="text" class="form-control" placeholder="No Telphone" name="tlpn" value="'+data.tlpn+'"></div><div class="form-group"><label>Barang</label><input type="text" class="form-control" placeholder="Barang" name="barang" ></div><div class="form-group"><label>Harga</label><input type="text" class="form-control" placeholder="Harga" name="harga" value="'+data.harga+'"></div><div class="form-group"><input type="submit" class="btn btn-primary proses" value="Proses" data-id="' + data.id + '" data-name="' + data.nama + '"></div>';
-                    }
-                },
-            });
-            $('#name').val('');
-        });
-        $(document).on('click', '.proses', function(){
-            alert('oke lur');
-        });
-    });
+    } );
 </script>
 </body>
 </html>

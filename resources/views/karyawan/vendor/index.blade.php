@@ -2,7 +2,7 @@
 @section('main')
 <br>
 <div class="container">
-    <a href="{{route('pelanggan.create')}}" class="btn btn-sm btn-primary">Tambah</a>
+    <a href="{{route('vendor.create')}}" class="btn btn-sm btn-primary">Tambah</a>
     <br>
     <br>
     <div class="row">
@@ -13,35 +13,31 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-              <table class="table table-hover" id="myTable">
+              <table class="table table-hover " id="myTable">
                 <thead>
                     <tr>
-                        <th>NIK</th>
                         <th>Nama</th>
-                        <th>Jenis Kelamin</th>
                         <th>Alamat</th>
-                        <th>Tempat Tanggal Lahir</th>
-                        <th>Telphone</th>
-                        <th>Email</th>
+                        <th>No Telphone</th>
+                        <th>Barang</th>
+                        <th>Harga</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach ($pelanggans as $pelanggan)
+                  @foreach ($vendors as $vendor)
                   <tr>
-                      <td>{{$pelanggan->nik}}</td>
-                      <td>{{$pelanggan->nama}}</td>
-                      <td>{{$pelanggan->jk}}</td>
-                      <td>{{$pelanggan->alamat}}</td>
-                      <td>{{$pelanggan->ttl}}</td>
-                      <td>{{$pelanggan->tlpn}}</td>
-                      <td>{{$pelanggan->email}}</td>
+                      <td>{{$vendor->nama}}</td>
+                      <td>{{$vendor->alamat}}</td>
+                      <td>{{$vendor->tlpn}}</td>
+                      <td>{{$vendor->barang}}</td>
+                      <td>{{$vendor->harga}}</td>
                       <td>
-                        <a href="{{route('pelanggan.edit',$pelanggan->id)}}" class="btn btn-sm btn-info">Edit</a>
-                        <a href="#" data-toggle="modal" data-target="#danger_modal_{{$pelanggan->id}}" class="btn btn-sm btn-danger">Hapus</a>
+                        <a href="{{route('vendor.edit',$vendor->id)}}" class="btn btn-sm btn-info">Edit</a>
+                        <a href="#" data-toggle="modal" data-target="#danger_modal_{{$vendor->id}}" class="btn btn-sm btn-danger">Hapus</a>
                       </td>
                   </tr>
-                  <div class="modal fade" id="danger_modal_{{$pelanggan->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="danger_modal_{{$vendor->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content panel-warning">
                         <div class="modal-header panel-heading">
@@ -53,7 +49,7 @@
                         </div>
                         <div class="modal-footer">
 
-                          <form action="{{route('pelanggan.destroy',$pelanggan->id)}}" method="POST">
+                          <form action="{{route('vendor.destroy',$vendor->id)}}" method="POST">
                               {{ method_field('DELETE') }}
                               {{ csrf_field() }}
                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -73,5 +69,4 @@
         </div>
     </div>
 </div>
-
 @endsection

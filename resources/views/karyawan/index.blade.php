@@ -1,4 +1,6 @@
 @extends('layouts.back_end')
 @section('main')
-    Karywan
+    @if(Auth::user()->isAdmin())
+    enter code here
+    @endif
 @endsection

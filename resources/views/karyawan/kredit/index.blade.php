@@ -2,9 +2,6 @@
 @section('main')
 <br>
 <div class="container">
-    <a href="{{route('pelanggan.create')}}" class="btn btn-sm btn-primary">Tambah</a>
-    <br>
-    <br>
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -13,7 +10,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-              <table class="table table-hover" id="myTable">
+              <table class="table table-hover " id="myTable">
                 <thead>
                     <tr>
                         <th>NIK</th>
@@ -37,7 +34,7 @@
                       <td>{{$pelanggan->tlpn}}</td>
                       <td>{{$pelanggan->email}}</td>
                       <td>
-                        <a href="{{route('pelanggan.edit',$pelanggan->id)}}" class="btn btn-sm btn-info">Edit</a>
+                        <a href="{{route('kredit.detail',$pelanggan->id)}}" class="btn btn-sm btn-info">Ok</a>
                         <a href="#" data-toggle="modal" data-target="#danger_modal_{{$pelanggan->id}}" class="btn btn-sm btn-danger">Hapus</a>
                       </td>
                   </tr>
@@ -73,5 +70,4 @@
         </div>
     </div>
 </div>
-
 @endsection

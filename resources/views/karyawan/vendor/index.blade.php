@@ -19,8 +19,7 @@
                         <th>Nama</th>
                         <th>Alamat</th>
                         <th>No Telphone</th>
-                        <th>Barang</th>
-                        <th>Harga</th>
+                        <th>Kategori</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -30,8 +29,7 @@
                       <td>{{$vendor->nama}}</td>
                       <td>{{$vendor->alamat}}</td>
                       <td>{{$vendor->tlpn}}</td>
-                      <td>{{$vendor->barang}}</td>
-                      <td>{{$vendor->harga}}</td>
+                      <td>{{$vendor->kategori}}</td>
                       <td>
                         <a href="{{route('vendor.edit',$vendor->id)}}" class="btn btn-sm btn-info">Edit</a>
                         <a href="#" data-toggle="modal" data-target="#danger_modal_{{$vendor->id}}" class="btn btn-sm btn-danger">Hapus</a>

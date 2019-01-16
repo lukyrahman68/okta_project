@@ -15,6 +15,9 @@ class CreateKreditsTable extends Migration
     {
         Schema::create('kredits', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('pelanggan_id');
+            $table->string('barang_id');
+            $table->integer('sts');
             $table->timestamps();
         });
     }

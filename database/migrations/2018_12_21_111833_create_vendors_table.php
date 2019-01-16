@@ -16,10 +16,9 @@ class CreateVendorsTable extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama');
+            $table->string('kategori');
             $table->string('alamat');
             $table->string('tlpn');
-            $table->string('barang');
-            $table->integer('harga');
             $table->timestamps();
         });
     }

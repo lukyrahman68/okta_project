@@ -40,8 +40,26 @@ class PelangganController extends Controller
                 }
             }
         }
-        
-        
+
+
+        return redirect()->route('pelanggan.index');
+    }
+    public function update(request $request, $id){
+        $input = $request->all();
+        $pelanggan = Pelanggan::find($id);
+
+
+        if($request->dp){
+            foreach ($request->dp as $item_dp) {
+                if($dp = $item_dp){
+                    $name_dp = time() . $dp->getClientOriginalName();
+                    $dp->move('images/'.$pelanggan->id,$name_dp);
+                    $photo = Media::create(['pelanggan_id'=>$pelanggan->id, 'nama'=>$name_dp, 'ket'=>"Dokumen Pendukung"]);
+                }
+            }
+        }
+
+        $pelanggan->update($input);
         return redirect()->route('pelanggan.index');
     }
     public function edit(request $request,$id){
@@ -77,8 +95,10 @@ class PelangganController extends Controller
     }
     public function destroy($id){
         $pelanggan = Pelanggan::findOrFail($id);
+        $media = Media::where('pelanggan_id', '=', $id);
         File::deleteDirectory(public_path('images/'.$pelanggan->id));
         $pelanggan->delete();
+        $media->delete();
         return redirect()->route('pelanggan.index');
     }
 }

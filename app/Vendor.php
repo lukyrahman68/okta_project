@@ -11,7 +11,10 @@ class Vendor extends Model
         'nama',
         'alamat',
         'tlpn',
-        'barang',
-        'harga',
+        'kategori',
     ];
+    public function barangs()
+    {
+        return $this->hasMany('App\barang');
+    }
 }

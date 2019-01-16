@@ -6,8 +6,9 @@
     <div class="box">
       <div class="box-header">
         <h3 class="box-title" style="font-weight: bold">Responsive Hover Table</h3>
-        <form action="{{route('pelanggan.store')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('pelanggan.update', $pelanggan->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="NIK">NIK</label>
                 <input type="text" class="form-control" placeholder="NIK" name="nik" value="{{$pelanggan->nik}}">
@@ -21,9 +22,22 @@
                 <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="{{$pelanggan->alamat}}">
             </div>
             <div class="form-group">
-                <label for="JK">Jenis Kelamin</label>
-                <input type="text" class="form-control" placeholder="Jenis Kelamin" name="jk" value="{{$pelanggan->jk}}">
-            </div>
+                    <label for="Alamat">Jenis Kelamin</label>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="jk" class="custom-control-input" value="Laki - Laki" {{($pelanggan->jk== 'Laki - Laki') ?  "checked" : "" }}>
+                            <label class="custom-control-label" for="customRadio1">Laki - Laki</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="jk" class="custom-control-input" value="Perempuan" {{($pelanggan->jk== 'Perempuan') ?  "checked" : "" }}>
+                            <label class="custom-control-label" for="customRadio2">Perempuan</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <div class="form-group">
                 <label for="TTL">TTL</label>
                 <input type="text" class="form-control" placeholder="TTL" name="ttl" value="{{$pelanggan->ttl}}">
@@ -59,11 +73,11 @@
                                         <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#danger_modal_{{$img->id}}">Hapus</a></td>
                                     @endif
                             </tr>
-                            
+
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
             </div>
 

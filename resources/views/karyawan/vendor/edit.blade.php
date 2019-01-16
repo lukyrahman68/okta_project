@@ -22,20 +22,17 @@
                 <input type="text" class="form-control" placeholder="Telphone" name="tlpn" value="{{$vendor->tlpn}}">
             </div>
             <div class="form-group">
-                <label for="barang">Nama Barang</label>
-                <input type="text" class="form-control" placeholder="Nama Barang" name="barang" value="{{$vendor->barang}}">
-            </div>
-            <div class="form-group">
-                <label for="harga">Harga</label><br>
-                <div class="row">
-                    <div class="col-md-1" style="text-align: center">
-                        Rp.
-                    </div>
-                    <div class="col-md-2">
-                        <input type="number" class="form-control" placeholder="Harga" name="harga" value="{{$vendor->harga}}">
-                    </div>
+                    <label for="kategori">Kategori</label>
+                    <select name="kategori" id="kategori" class="form-control">
+                        <option value="" disabled selected>Pilih Kategori</option>
+                        <option value="Elektronik" >Elektronik</option>
+                        <option value="Ponsel" >Ponsel</option>
+                        <option value="Helm" >Helm</option>
+                        <option value="Ban" >Ban</option>
+                        <option value="Mebel" >Mebel</option>
+                        <option value="Other" >Other</option>
+                    </select>
                 </div>
-            </div>
             <div class="pull-right">
                 <input type="submit" value="Simpan" class="btn btn-sm btn-primary">
             </div>

@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->
@@ -23,6 +25,8 @@
   <link rel="stylesheet" href="{{asset('bower_components/jvectormap/jquery-jvectormap.css')}}">
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="{{asset('plugins/timepicker/bootstrap-timepicker.min.css')}}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
@@ -35,7 +39,17 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
+    <style>
+    #events {
+        margin-bottom: 1em;
+        padding: 1em;
+        background-color: #f6f6f6;
+        border: 1px solid #999;
+        border-radius: 3px;
+        height: 100px;
+        overflow: auto;
+    }
+    </style>
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -175,16 +189,14 @@
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
-          <span>Charts</span>
+          <span>Pengajuan Kredit</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-          <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+          <li><a href="{{route('kredit.index')}}"><i class="fa fa-circle-o"></i> Kredit Baru</a></li>
+          <li><a href="{{route('kredit.status')}}"><i class="fa fa-circle-o"></i> Status Pengajuan</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -559,35 +571,90 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+@yield('script')
 <script>
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-        $('#cari').click(function(){
-            $.ajax({
-                type: 'post',
-                url: '/kredit/cari',
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'id': $('input[name=id]').val()
-                },
-                success: function(data) {
-                    if ((data.errors)){
-                    $('.error').removeClass('hidden');
-                        $('.error').text(data.errors.name);
+        $(function () {
+
+          //Date picker
+          $('#datepicker').datepicker({
+            autoclose: true
+          })
+
+
+        })
+        $(document).ready( function () {
+            var table = $('#table_cari').DataTable({
+                "columnDefs": [
+                    {
+                        "targets": [ 0 ],
+                        "visible": false,
+                        "searchable": false
                     }
-                    else {
-                        $('.error').addClass('hidden');
-                        var div = document.getElementById('body');
-                        div.innerHTML += '<hr><div class="form-group"><label>Nama Vendor</label><input type="text" class="form-control" placeholder="Nama Vendor" name="nama" value="'+data.nama+'"></div><div class="form-group"><label>Alamat</label><input type="text" class="form-control" placeholder="Alamat" name="alamat" value="'+data.alamat+'"></div><div class="form-group"><label>No Telphone</label><input type="text" class="form-control" placeholder="No Telphone" name="tlpn" value="'+data.tlpn+'"></div><div class="form-group"><label>Barang</label><input type="text" class="form-control" placeholder="Barang" name="barang" ></div><div class="form-group"><label>Harga</label><input type="text" class="form-control" placeholder="Harga" name="harga" value="'+data.harga+'"></div><div class="form-group"><input type="submit" class="btn btn-primary proses" value="Proses" data-id="' + data.id + '" data-name="' + data.nama + '"></div>';
-                    }
-                },
+                ]
             });
-            $('#name').val('');
+            $('#table_cari tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+
+            $('#button').click(function () {
+                var ids = $.map(table.rows('.selected').data(), function (item) {
+                    return item[0]
+                });
+                $('#barang_id').val(ids);
+                console.log(ids)
+                alert(table.rows('.selected').data().length + ' row(s) selected');
+            });
+            // $('#myTable').DataTable();
+            $(document).on('click','#cari',function (e){
+                // $('.body2').remove();
+                // $("#table_cari tbody tr").remove();
+                table
+                    .clear()
+                    .draw();
+                $.ajax({
+                    type: 'post',
+                    url: '/kredit/cari',
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'kategori': $('#kategori').find(":selected").text(),
+                    },
+                    success: function(data) {
+                        if ((data.errors)){
+                        $('.error').removeClass('hidden');
+                            $('.error').text(data.errors.name);
+                        }
+                        else {
+                            $('.error').addClass('hidden');
+
+                            // alert(data[0].barangs[0].nama);
+                            data.forEach(function(value , i) {
+                                data[i].barangs.forEach(function(entry, j) {
+                                // alert(entry.nama)
+
+                                table.row.add([
+                                    entry.id,
+                                    entry.nama,
+                                    data[i].nama,
+                                    entry.harga,
+
+                                ]).draw( false );
+                                // $('#table_cari').find('tbody').append( "<tr><td>"+ entry.nama +"</td><td>"+data[i].nama+"</td><td>"+entry.harga+"</td><td><a href='#' class='btn btn-primary btn-sm'>Pilih</a></td></tr>" );
+                            });
+                            });
+
+                            // var div = document.getElementById('body');
+                            // div.innerHTML += '<hr><div class="body2"><div class="form-group"><label>Nama Vendor</label><input type="text" class="form-control" placeholder="Nama Vendor" name="nama" value="'+data[0].nama+'"></div><div class="form-group"><label>Alamat</label><input type="text" class="form-control" placeholder="Alamat" name="alamat" value="'+data[0].alamat+'"></div><div class="form-group"><label>No Telphone</label><input type="text" class="form-control" placeholder="No Telphone" name="tlpn" value="'+data[0].tlpn+'"></div><div class="form-group"><label>Barang</label><select class="form-control" id="barang" name="barang"></select></div><div class="form-group"><label>Harga</label><input type="text" class="form-control" placeholder="Harga" name="harga" value="'+data[0].harga+'"></div><div class="form-group"><input type="submit" class="btn btn-primary proses" value="Proses" name="simpan" data-id="' + data[0].id + '" data-name="' + data[0].nama + '"></div></div>';
+
+                            // $.each(data[1], function(index, item) {
+                            //     $('#barang').append("<option value='"+ item.id +"'>"+item.nama+"</option>");
+                            // });
+                        }
+                    },
+                });
+                $('#name').val('');
+            });
         });
-        $(document).on('click', '.proses', function(){
-            alert('oke lur');
-        });
-    });
-</script>
+      </script>
 </body>
 </html>

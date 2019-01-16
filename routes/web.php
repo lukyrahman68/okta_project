@@ -25,15 +25,22 @@ Route::group(['middleware' => ['auth']], function() {
         if (!$user->is_owner) {
             return view('karyawan.index');
         } else {
-            $pelanggans = App\Pelanggan::all();
-            return view('pemilik.index',compact('pelanggans'));
+            $kredits = App\Kredit::where('sts',0)
+                                    ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
+                                    ->join('barangs','kredits.barang_id','=','barangs.id')
+                                    ->join('vendors','vendors.id','=','barangs.vendor_id')
+                                    ->selectRaw('pelanggans.*,kredits.id as kredit_id, vendors.nama as vendor_nama, barangs.harga,barangs.nama as nama_brng')
+                                    ->get();
+            return view('pemilik.index',compact('kredits'));
         }
     });
     Route::resource('pelanggan', 'PelangganController');
     Route::resource('vendor', 'VendorController');
     Route::resource('kredit', 'KreditController');
     Route::resource('barang', 'BarangController');
+    Route::resource('approve', 'ApproveController');
     Route::get('kredit/{id}/detail','KreditController@kredit_detail')->name('kredit.detail');
+    Route::get('kredit/status/cek','KreditController@status')->name('kredit.status');
     Route::post('kredit/cari','KreditController@cari')->name('kredit.cari');
     Route::post('img/{id}', 'PelangganController@ubah_img')->name('ubah_img');
     Route::post('img/{id}/add', 'PelangganController@add_img')->name('add_img');

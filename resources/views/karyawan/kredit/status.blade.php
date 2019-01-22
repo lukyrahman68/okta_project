@@ -58,14 +58,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach ($diterimas as $kredit)
+                          @foreach ($ditolaks as $tolak)
                           <tr>
-                              <td>{{$kredit->nama}}</td>
-                              <td>{{$kredit->alamat}}</td>
-                              <td>{{$kredit->tlpn}}</td>
-                              <td>{{$kredit->vendor_nama}}</td>
-                              <td>{{$kredit->nama_brng}}</td>
-                              <td>{{$kredit->harga}}</td>
+                              <td>{{$tolak->nama}}</td>
+                              <td>{{$tolak->alamat}}</td>
+                              <td>{{$tolak->tlpn}}</td>
+                              <td>{{$tolak->vendor_nama}}</td>
+                              <td>{{$tolak->nama_brng}}</td>
+                              <td>{{$tolak->harga}}</td>
                           @endforeach
                         </tbody>
                       </table>

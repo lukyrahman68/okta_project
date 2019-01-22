@@ -139,7 +139,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li>
-        <a href="{{route('pelanggan.index')}}">
+        <a href="{{route('survey.index')}}">
           <i class="fa fa-th"></i> <span>Hasil Survey</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>

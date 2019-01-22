@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth']], function() {
         if (!$user->is_owner) {
             return view('karyawan.index');
         } else {
-            $kredits = App\Kredit::where('sts',0)
+            $kredits = App\Kredit::where('kredits.sts',0)
                                     ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                     ->join('barangs','kredits.barang_id','=','barangs.id')
                                     ->join('vendors','vendors.id','=','barangs.vendor_id')
@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('kredit', 'KreditController');
     Route::resource('barang', 'BarangController');
     Route::resource('approve', 'ApproveController');
+    Route::resource('survey', 'SurveyController');
+    Route::get('survey/{id}/detail','SurveyController@bukti_survey')->name('survey.bukti_survey');
     Route::get('kredit/{id}/detail','KreditController@kredit_detail')->name('kredit.detail');
     Route::get('kredit/status/cek','KreditController@status')->name('kredit.status');
     Route::post('kredit/cari','KreditController@cari')->name('kredit.cari');

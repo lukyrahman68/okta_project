@@ -34,8 +34,13 @@
                       <td>{{$pelanggan->tlpn}}</td>
                       <td>{{$pelanggan->email}}</td>
                       <td>
-                        <a href="{{route('kredit.detail',$pelanggan->id)}}" class="btn btn-sm btn-info">Ok</a>
-                        <a href="#" data-toggle="modal" data-target="#danger_modal_{{$pelanggan->id}}" class="btn btn-sm btn-danger">Hapus</a>
+                          @if ($pelanggan->sts=='1' || $pelanggan->sts=='3')
+                              <a href="#" class="btn btn-info" disabled>Dalam Pengajuan</a>
+                          @else
+                            <a href="{{route('kredit.detail',$pelanggan->id)}}" class="btn btn-sm btn-info">Ok</a>
+                            <a href="#" data-toggle="modal" data-target="#danger_modal_{{$pelanggan->id}}" class="btn btn-sm btn-danger">Hapus</a>
+                          @endif
+
                       </td>
                   </tr>
                   <div class="modal fade" id="danger_modal_{{$pelanggan->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

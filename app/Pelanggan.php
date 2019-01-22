@@ -14,7 +14,8 @@ class Pelanggan extends Model
         'jk',
         'ttl',
         'tlpn',
-        'email'
+        'email',
+        'sts',
     ];
     public function media(){
         return $this->hasMany('App\Media');

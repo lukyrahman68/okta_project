@@ -41,21 +41,30 @@ class KreditController extends Controller
         //                 ->first();
         return response()->json($data);
     }
-    public function create(request $request){
-        // $data = $request->all();
-        // $data['sts'] = 0;
-        // Kredit::create($data);
-        // return response()->json($data);
-        return $request->all();
+    public function store(request $request){
+
+        $barang = explode(',',$request->barang_id);
+        $vendor = explode(',',$request->vendor_id);
+        for($i=0;$i<sizeof($barang);$i++){
+            $kredit = new Kredit;
+            $kredit->pelanggan_id = $request->pelanggan_id;
+            $kredit->sts = 1;
+            $kredit->vendor_id = $vendor[$i];
+            $kredit->barang_id = $barang[$i];
+            $kredit->save();
+        }
+        $pelanggan = Pelanggan::find($request->pelanggan_id);
+        $pelanggan->update(['sts'=>'1']);
+        return redirect()->route('kredit.index');
     }
     public function status(){
-        $diterimas = Kredit::where('sts',1)
+        $diterimas = Kredit::where('kredits.sts',3)
                                 ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                 ->join('barangs','kredits.barang_id','=','barangs.id')
                                 ->join('vendors','vendors.id','=','barangs.vendor_id')
                                 ->selectRaw('pelanggans.*,kredits.id as kredit_id, vendors.nama as vendor_nama, barangs.harga,barangs.nama as nama_brng')
                                 ->get();
-        $ditolaks = Kredit::where('sts',2)
+        $ditolaks = Kredit::where('kredits.sts',2)
                                 ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                 ->join('barangs','kredits.barang_id','=','barangs.id')
                                 ->join('vendors','vendors.id','=','barangs.vendor_id')

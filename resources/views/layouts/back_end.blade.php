@@ -590,20 +590,36 @@
                         "targets": [ 0 ],
                         "visible": false,
                         "searchable": false
+                    },
+                    {
+                        "targets": [ 1 ],
+                        "visible": false,
+                        "searchable": false
                     }
                 ]
             });
             $('#table_cari tbody').on('click', 'tr', function () {
-                $(this).toggleClass('selected');
+                if($('#table_cari tbody tr').hasClass('selected')){
+                    $("#table_cari tbody tr").attr('class', '');
+                    $(this).toggleClass('selected');
+                }else{
+                    $(this).toggleClass('selected');
+                }
             });
-
+            // var tes= new Array();
             $('#button').click(function () {
                 var ids = $.map(table.rows('.selected').data(), function (item) {
+                    // tes.push(item[0]);
                     return item[0]
                 });
+                var vendor = $.map(table.rows('.selected').data(), function (item) {
+                    return item[1]
+                });
+
                 $('#barang_id').val(ids);
-                console.log(ids)
-                alert(table.rows('.selected').data().length + ' row(s) selected');
+                $('#vendor_id').val(vendor);
+                console.log(tes)
+                // alert(table.rows('.selected').data().length + ' row(s) selected');
             });
             // $('#myTable').DataTable();
             $(document).on('click','#cari',function (e){
@@ -634,6 +650,7 @@
 
                                 table.row.add([
                                     entry.id,
+                                    data[i].id,
                                     entry.nama,
                                     data[i].nama,
                                     entry.harga,

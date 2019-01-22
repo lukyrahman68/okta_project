@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kredit;
+use App\Pelanggan;
 
 class ApproveController extends Controller
 {
@@ -13,7 +14,7 @@ class ApproveController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $kredits = Kredit::where('sts',0)
+        $kredits = Kredit::where('kredits.sts',1)
                                 ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                 ->join('barangs','kredits.barang_id','=','barangs.id')
                                 ->join('vendors','vendors.id','=','barangs.vendor_id')
@@ -24,15 +25,21 @@ class ApproveController extends Controller
     }
     public function update($id){
         $kredit = Kredit::findOrFail($id);
-        $kredit->sts = 1;
+        $pelanggan = Pelanggan::findOrFail($kredit->pelanggan_id);
+        $kredit->sts = 3;
+        $pelanggan->sts = 3;
         $kredit->save();
+        $pelanggan->save();
         return redirect()->route('approve.index');
         // return $kredit;
     }
     public function destroy($id){
         $kredit = Kredit::findOrFail($id);
+        $pelanggan = Pelanggan::findOrFail($kredit->pelanggan_id);
+        $pelanggan->sts = 0;
         $kredit->sts = 2;
         $kredit->save();
+        $pelanggan->save();
         return redirect()->route('approve.index');
         // return $kredit;
     }

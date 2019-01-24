@@ -20,6 +20,10 @@ class PelangganController extends Controller
     }
     public function store(request $request){
         $input = $request->all();
+        if(!$request->has('nama_toko')){
+            $input['nama_toko']='-';
+            $input['alamat_toko']='-';
+        }
         $pelanggan = Pelanggan::create($input);
         if($ktp = $request->file('ktp')){
             $name_ktp = time() . $ktp->getClientOriginalName();
@@ -30,6 +34,11 @@ class PelangganController extends Controller
             $name_kk = time() . $kk->getClientOriginalName();
             $kk->move('images/'.$pelanggan->id,$name_kk);
             $photo = Media::create(['pelanggan_id'=>$pelanggan->id, 'nama'=>$name_kk, 'ket'=>"KK"]);
+        }
+        if($kk = $request->file('photo')){
+            $name_photo = time() . $kk->getClientOriginalName();
+            $kk->move('images/'.$pelanggan->id,$name_photo);
+            $photo = Media::create(['pelanggan_id'=>$pelanggan->id, 'nama'=>$name_photo, 'ket'=>"Pas Photo"]);
         }
         if($request->dp){
             foreach ($request->dp as $item_dp) {

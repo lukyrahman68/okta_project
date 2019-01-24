@@ -542,7 +542,35 @@
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
-    } );
+        $('#btn_detail').click(function (){
+            $('#add_media').remove();
+            $('<div id="add_media"></div>').appendTo('#media');
+            $.ajax({
+                    type: 'get',
+                    url: '/approve/cari_img/'+$('#btn_detail').attr('value'),
+                    data: {
+                        // '_token': $('input[name=_token]').val(),
+                        // 'id': $('#btn_detail').attr('value'),
+                    },
+                    success: function(data) {
+                        if ((data.errors)){
+                        $('.error').removeClass('hidden');
+                            $('.error').text(data.errors.name);
+                        }
+                        else {
+                             $.each(data, function (i) {
+                                // console.log(data[i].nama);
+                                var base_url = window.location.origin;
+                                $('#add_media').prepend('<label>'+data[i].ket+'</label>');
+                                $('#add_media').prepend('<img src="'+base_url+'/images/'+data[i].pelanggan_id+'/'+data[i].nama+'" class="img-thumbnail">');
+                             });
+                            // $("#add_media").append("Oke");
+                        }
+                    }
+
+            });
+        });
+    });
 </script>
 </body>
 </html>

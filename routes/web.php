@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('img/{id}', 'PelangganController@ubah_img')->name('ubah_img');
     Route::post('img/{id}/add', 'PelangganController@add_img')->name('add_img');
     Route::get('img/{id}/delete', 'PelangganController@delete_img')->name('delete_img');
+    Route::get('approve/cari_img/{id}', 'ApproveController@cari_img')->name('cari_img');
+    Route::get('kredit/proses/index/{id}', 'KreditController@proses')->name('kredit.proses');
 });
 Auth::routes();
 Route::get('tes', function () {

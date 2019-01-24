@@ -584,6 +584,14 @@
 
         })
         $(document).ready( function () {
+            $('#pekerjaan').change( function (){
+                var pekerjaan = $('#pekerjaan').find(":selected").text();
+                // alert(pekerjaan);
+                if(pekerjaan == "Wiraswasta"){
+                    $('#form-pekerjaan').append('<div class="form-group"><label for="nama_toko">Nama Toko</label><input type="text" class="form-control" placeholder="Nama Toko" name="nama_toko" required></div><div class="form-group"><label for="alamat_toko">Alamat Toko</label><input type="text" class="form-control" placeholder="Alamat Toko" name="alamat_toko" required></div>');
+                }
+            });
+
             var table = $('#table_cari').DataTable({
                 "columnDefs": [
                     {
@@ -670,6 +678,45 @@
                     },
                 });
                 $('#name').val('');
+            });
+            $('#kalkulasi').click(function (){
+                var harga = $('#harga').text();
+                var cicilan = $('select[name=cicilan] :selected').val();
+                var bunga = $('input[name=bunga]:checked').val();
+                if(bunga=='0'){
+                    var cipok = parseInt(harga)/parseInt(cicilan);
+                    var bu_hit = parseInt(harga)*0.25/12;
+                    var angsuran = parseInt(cipok)+parseInt(bu_hit);
+                }else{
+                    var cipok = parseInt(harga)/parseInt(cicilan);
+                    var idx=0;
+                    var ci_bul=[];
+                    var harga_baru=harga;
+                    var bu_hit_baru = 0;
+                    var cipok_baru = 0;
+                    var tot_ang_baru = 0;
+                    while(idx<cicilan){
+                        var bu_hit = (parseInt(harga)-(parseInt(idx)*parseInt(cipok)))*0.25/12;
+                        console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
+                        bu_hit_baru = parseInt(bu_hit_baru)+parseInt(bu_hit);
+                        cipok_baru = parseInt(cipok_baru)+parseInt(cipok);
+                        ci_bul.push(Math.round(bu_hit));
+                        var tot_ang = parseInt(cipok)+parseInt(bu_hit);
+                        tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
+                        harga_baru = harga_baru-cipok;
+                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
+                        idx++;
+                    }
+                    $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
+                }
+
+                console.log('harga = '+harga);
+                console.log('cicilan = '+cicilan);
+                console.log('bunga = '+bunga);
+                console.log('cicilan Pokok = '+cipok);
+                console.log('Bunga Hitung = '+bu_hit);
+                console.log('Angsuran = '+angsuran);
+                console.log('Cicilan perbulan = '+ci_bul);
             });
         });
       </script>

@@ -18,11 +18,16 @@ class CreatePelanggansTable extends Migration
             $table->string('nik');
             $table->string('nama');
             $table->string('alamat');
+            $table->string('ket_alamat');
+            $table->string('pekerjaan');
+            $table->string('nama_toko')->default('-');
+            $table->string('alamat_toko')->default('-');
+            $table->string('gaji');
             $table->string('jk');
             $table->string('ttl');
             $table->string('tlpn');
             $table->string('email');
-            $table->string('sts');
+            $table->string('sts')->default('0');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Kredit;
 use App\Pelanggan;
+use Response;
 
 class ApproveController extends Controller
 {
@@ -26,6 +27,11 @@ class ApproveController extends Controller
     public function update($id){
         $kredit = Kredit::findOrFail($id);
         $pelanggan = Pelanggan::findOrFail($kredit->pelanggan_id);
+        $panjang = strlen($pelanggan->nik);
+        $mulai = $panjang - 5;
+        $nik = substr($pelanggan->nik, $mulai, $panjang);
+        $no_kontrak = $nik.'-'.$id;
+        $kredit->no_kontrak = $no_kontrak;
         $kredit->sts = 3;
         $pelanggan->sts = 3;
         $kredit->save();
@@ -42,5 +48,12 @@ class ApproveController extends Controller
         $pelanggan->save();
         return redirect()->route('approve.index');
         // return $kredit;
+    }
+    public function cari_img($id){
+        $media = Pelanggan::find($id)
+                            ->join('media','media.pelanggan_id','=','pelanggans.id')
+                            ->selectRaw('media.*')
+                            ->get();
+        return response()->json($media);
     }
 }

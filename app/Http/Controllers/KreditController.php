@@ -72,5 +72,14 @@ class KreditController extends Controller
                                 ->get();
         return view('karyawan.kredit.status',compact('diterimas','ditolaks'));
     }
+    public function proses($id){
+        $pelanggan=Pelanggan::find($id)
+                                ->join('kredits','kredits.pelanggan_id','=','pelanggans.id')
+                                ->selectRaw('pelanggans.*,kredits.*')
+                                ->first();
+        $barang = Barang::findOrFail($pelanggan->barang_id);
+        $vendor = Vendor::findOrFail($pelanggan->vendor_id);
+        return view('karyawan.kredit.proses',compact('pelanggan','barang','vendor'));
+    }
 
 }

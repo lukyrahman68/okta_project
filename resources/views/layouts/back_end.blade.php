@@ -178,14 +178,6 @@
           <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> Barang Vendor</a></li>
         </ul>
       </li>
-      <li>
-        <a href="{{route('kredit.index')}}">
-          <i class="fa fa-th"></i> <span>Pengajuan Kredit</span>
-          <span class="pull-right-container">
-            <small class="label pull-right bg-green">new</small>
-          </span>
-        </a>
-      </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
@@ -199,7 +191,7 @@
           <li><a href="{{route('kredit.status')}}"><i class="fa fa-circle-o"></i> Status Pengajuan</a></li>
         </ul>
       </li>
-      <li class="treeview">
+      {{-- <li class="treeview">
         <a href="#">
           <i class="fa fa-laptop"></i>
           <span>UI Elements</span>
@@ -316,7 +308,7 @@
       <li class="header">LABELS</li>
       <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
       <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-      <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+      <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> --}}
     </ul>
     </section>
     <!-- /.sidebar -->

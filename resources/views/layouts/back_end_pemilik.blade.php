@@ -138,14 +138,14 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
-      <li>
+      {{-- <li>
         <a href="{{route('survey.index')}}">
           <i class="fa fa-th"></i> <span>Hasil Survey</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
         </a>
-      </li>
+      </li> --}}
       <li>
         <a href="{{route('approve.index')}}">
           <i class="fa fa-th"></i> <span> Approval Kredit</span>

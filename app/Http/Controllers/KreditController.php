@@ -22,7 +22,7 @@ class KreditController extends Controller
         $pelanggan = Pelanggan::findOrFail($id);
         // $vendor = Vendor::barangs;
         // return $vendor;
-        return view('karyawan.kredit.detail',compact('pelanggan','status'));
+        return view('karyawan.kredit.detail',compact('pelanggan'));
     }
     public function cari(request $request){
         // $data = Vendor::join('barangs','barangs.vendor_id','=','vendors.id')

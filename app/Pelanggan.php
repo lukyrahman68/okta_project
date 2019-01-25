@@ -16,7 +16,7 @@ class Pelanggan extends Model
         'tlpn',
         'email',
         'sts',
-        'ket-alamat',
+        'ket_alamat',
         'pekerjaan',
         'nama_toko',
         'alamat_toko',

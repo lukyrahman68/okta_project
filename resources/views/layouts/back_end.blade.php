@@ -679,6 +679,18 @@
                 });
                 $('#name').val('');
             });
+            var ci_bul=[];
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                mm = '0' + mm;
+                }
             $('#kalkulasi').click(function (){
                 var harga = $('#harga').text();
                 var cicilan = $('select[name=cicilan] :selected').val();
@@ -690,7 +702,6 @@
                 }else{
                     var cipok = parseInt(harga)/parseInt(cicilan);
                     var idx=0;
-                    var ci_bul=[];
                     var harga_baru=harga;
                     var bu_hit_baru = 0;
                     var cipok_baru = 0;
@@ -709,14 +720,40 @@
                     }
                     $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
                 }
-
-                console.log('harga = '+harga);
-                console.log('cicilan = '+cicilan);
-                console.log('bunga = '+bunga);
-                console.log('cicilan Pokok = '+cipok);
-                console.log('Bunga Hitung = '+bu_hit);
-                console.log('Angsuran = '+angsuran);
-                console.log('Cicilan perbulan = '+ci_bul);
+                today = mm + '/' + dd + '/' + yyyy;
+                $('<h3>Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));
+                $('#proses_simpan').css('display','block');
+                // console.log('harga = '+harga);
+                // console.log('cicilan = '+cicilan);
+                // console.log('bunga = '+bunga);
+                // console.log('cicilan Pokok = '+cipok);
+                // console.log('Bunga Hitung = '+bu_hit);
+                // console.log('Angsuran = '+angsuran);
+                // console.log('Cicilan perbulan = '+ci_bul);
+            });
+           $('#proses_simpan').on('click',function(){
+            now = yyyy + '-' + mm + '-' + dd;
+               console.log(now);
+            $.ajax({
+                type: 'post',
+                url: '/kredit/proses/simpan',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id_kredit': $('#kredit_id').val(),
+                    'lama_cicilan':$('#cicilan').find(':selected').val(),
+                    'suku_bunga':$('input[name=bunga]:checked').val(),
+                    'cicilan': ci_bul,
+                    'jatuh_tempo': now,
+                },
+                success: function(data) {
+                    if ((data.errors)){
+                    $('.error').removeClass('hidden');
+                        $('.error').text(data.errors.name);
+                    }
+                    else {
+                        }
+                    },
+                });
             });
         });
       </script>

@@ -36,7 +36,7 @@
                               <td>{{$kredit->nama_brng}}</td>
                               <td>{{$kredit->harga}}</td>
                               <td>
-                                  <a href="{{route('kredit.proses',$kredit->id)}}" class="btn btn-primary btn-sm">Proses</a>
+                                  <a target="_blank" href="{{route('kredit.proses',$kredit->id)}}" class="btn btn-primary btn-sm">Proses</a>
                               </td>
                           @endforeach
                         </tbody>

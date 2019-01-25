@@ -7,6 +7,7 @@ use App\Pelanggan;
 use App\Vendor;
 use App\Barang;
 use App\Kredit;
+use App\DetailKredit;
 use Response;
 class KreditController extends Controller
 {
@@ -75,11 +76,22 @@ class KreditController extends Controller
     public function proses($id){
         $pelanggan=Pelanggan::find($id)
                                 ->join('kredits','kredits.pelanggan_id','=','pelanggans.id')
-                                ->selectRaw('pelanggans.*,kredits.*')
+                                ->selectRaw('pelanggans.*,kredits.*,kredits.id as kredit_id')
                                 ->first();
         $barang = Barang::findOrFail($pelanggan->barang_id);
         $vendor = Vendor::findOrFail($pelanggan->vendor_id);
         return view('karyawan.kredit.proses',compact('pelanggan','barang','vendor'));
+    }
+    public function simpan(request $request){
+        $cicilan = serialize($request->cicilan);
+        $kredit_details = new DetailKredit;
+        $kredit_details->kredit_id = $request->id_kredit;
+        $kredit_details->lama_cicilan = $request->lama_cicilan;
+        $kredit_details->suku_bunga = $request->suku_bunga;
+        $kredit_details->cicilan = $cicilan;
+        $kredit_details->jatuh_tempo = $request->jatuh_tempo;
+        $kredit_details->save();
+        return response()->json($kredit_details);
     }
 
 }

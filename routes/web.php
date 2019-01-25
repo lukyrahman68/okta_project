@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('img/{id}/delete', 'PelangganController@delete_img')->name('delete_img');
     Route::get('approve/cari_img/{id}', 'ApproveController@cari_img')->name('cari_img');
     Route::get('kredit/proses/index/{id}', 'KreditController@proses')->name('kredit.proses');
+    Route::post('kredit/proses/simpan', 'KreditController@simpan')->name('kredit.simpan');
 });
 Auth::routes();
 Route::get('tes', function () {

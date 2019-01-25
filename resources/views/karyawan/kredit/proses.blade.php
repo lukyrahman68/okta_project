@@ -14,6 +14,7 @@
                     <div class="col-md-6">
                         No Kontrak: <b>{{$pelanggan->no_kontrak}}</b><br>
                         Nama: <b>{{$pelanggan->nama}}</b><br>
+                        <input type="hidden" name="kredit_id" id="kredit_id" value="{{$pelanggan->id}}">
                     </div>
                     <div class="col-md-6">
                         <table class="table">
@@ -56,6 +57,7 @@
                         </div>
                 </div>
                 <button type="button" class="btn btn-primary" id="kalkulasi">Kalkulasi</button>
+                @csrf
                 <table class="table" id="simulasi_table">
                     <thead>
                         <tr>
@@ -71,6 +73,8 @@
                     </tbody>
 
                 </table>
+                <div id="tgl"></div>
+                <a href="#" class="btn btn-primary" id="proses_simpan" style="display: none">Simpan</a>
             </div><br>
           </div>
           <!-- /.box -->

@@ -50,6 +50,10 @@
                 <label for="email">Email</label>
                 <input type="email" class="form-control" placeholder="Email" name="email" value="{{$pelanggan->email}}">
             </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="Password" name="password" value="{{$pelanggan->password}}">
+            </div>
             <div class="card" style="padding:1em;border:1px solid #eee;">
                 <div class="card-body">
                     <div class="card-title"> Upload Photo</div>
@@ -64,7 +68,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pelanggan->media as $img)
+                            @foreach ($media as $img)
                             <tr>
                                 <td><label for="ktp">{{$img->ket}}</td>
                                 <td><img class="img-thumbnail" src="{{asset('images/'.$img->pelanggan_id.'/'.$img->nama)}}" alt="" srcset="" style="max-height: 300px;max-width: 150px;"></td>
@@ -91,7 +95,7 @@
     </div>
 </div>
 </div>
-@foreach ($pelanggan->media as $img)
+@foreach ($media as $img)
 <!-- Modal -->
 <div class="modal fade" id="edit_{{$img->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">

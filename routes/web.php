@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/loginpelanggan', function () {
+    return view('karyawan.pelanggan.login');
+});
 Route::get('/tes2', function () {
     return view('pemilik.index');
 });

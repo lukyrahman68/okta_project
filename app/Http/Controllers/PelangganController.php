@@ -18,6 +18,14 @@ class PelangganController extends Controller
     public function create(){
         return view('karyawan.pelanggan.tambah');
     }
+    public function login(request $request){
+        $pelanggan= Pelanggan::where('email','=',$request->email)->where('password','',$request->password);
+        if ($result->count()) {
+            return view('karyawan.pelanggan.index');
+        }else{
+            return view('karyawan.pelanggan.login');
+        }
+    }
     public function store(request $request){
         $input = $request->all();
         if(!$request->has('nama_toko')){
@@ -72,8 +80,13 @@ class PelangganController extends Controller
         return redirect()->route('pelanggan.index');
     }
     public function edit(request $request,$id){
-        $pelanggan = Pelanggan::findOrfail($id);
-        return view('karyawan.pelanggan.edit',compact('pelanggan'));
+        $pelanggan = Pelanggan::findOrfail($id); 
+        $media = Media::where('pelanggan_id', '=',$id)->get(); 
+        $data = array(
+            'pelanggan'  => $pelanggan,
+            'media' => $media
+        );
+        return view('karyawan.pelanggan.edit')->with($data);
     }
     public function ubah_img(request $request,$id){
         $media = Media::findOrFail($id);

@@ -116,6 +116,10 @@
                 <input type="email" class="form-control" placeholder="Email" name="email" required>
             </div>
             <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
+            </div>
+            <div class="form-group">
                 <label for="email">No Tephone Keluarga</label>
                 <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga" required>
                 <label for="email">No Tephone Keluarga 2</label>

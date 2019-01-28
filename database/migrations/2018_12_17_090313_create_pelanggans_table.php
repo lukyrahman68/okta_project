@@ -27,6 +27,7 @@ class CreatePelanggansTable extends Migration
             $table->string('ttl');
             $table->string('tlpn');
             $table->string('email');
+            $table->string('password');
             $table->string('sts')->default('0');
             $table->timestamps();
         });

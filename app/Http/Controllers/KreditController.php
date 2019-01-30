@@ -13,7 +13,7 @@ class KreditController extends Controller
 {
     //
     public function index(){
-        $pelanggans = Pelanggan::all();
+        $pelanggans = Pelanggan::all()->where('sts','!=','4');
         return view('karyawan.kredit.index',compact('pelanggans'));
     }
     public function show(){
@@ -76,7 +76,7 @@ class KreditController extends Controller
     public function proses($id){
         $pelanggan=Pelanggan::find($id)
                                 ->join('kredits','kredits.pelanggan_id','=','pelanggans.id')
-                                ->selectRaw('pelanggans.*,kredits.*,kredits.id as kredit_id')
+                                ->selectRaw('pelanggans.*,kredits.*,kredits.id as kredit_id,pelanggans.id as pelanggan_id')
                                 ->first();
         $barang = Barang::findOrFail($pelanggan->barang_id);
         $vendor = Vendor::findOrFail($pelanggan->vendor_id);
@@ -91,7 +91,25 @@ class KreditController extends Controller
         $kredit_details->cicilan = $cicilan;
         $kredit_details->jatuh_tempo = $request->jatuh_tempo;
         $kredit_details->save();
+
+        //find pelanggan
+        $pelanggan=Pelanggan::find($request->pelanggan_id);
+        $pelanggan->update(['sts'=>'4']);
+
+        //find kredit_id
+        $kredit = Kredit::find($request->id_kredit);
+        $kredit->update(['sts'=>'4']);
         return response()->json($kredit_details);
+    }
+    public function history(){
+        $pelanggans = Pelanggan::join('kredits','kredits.pelanggan_id','pelanggans.id')
+                                ->join('vendors','vendors.id','kredits.vendor_id')
+                                ->join('barangs','barangs.id','kredits.barang_id')
+                                ->join('kredit_details','kredit_details.kredit_id','kredits.id')
+                                ->selectRaw('pelanggans.nama,kredits.no_kontrak,vendors.nama as nama_vendor,barangs.nama as nama_barang,kredit_details.jatuh_tempo')
+                                ->where('kredits.sts','=','5')
+                                ->get();
+        return view('karyawan.kredit.history',compact('pelanggans'));
     }
 
 }

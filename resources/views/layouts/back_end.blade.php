@@ -189,7 +189,37 @@
         <ul class="treeview-menu">
           <li><a href="{{route('kredit.index')}}"><i class="fa fa-circle-o"></i> Kredit Baru</a></li>
           <li><a href="{{route('kredit.status')}}"><i class="fa fa-circle-o"></i> Status Pengajuan</a></li>
+          <li><a href="{{route('kredit.history')}}"><i class="fa fa-circle-o"></i> History Kredit</a></li>
         </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-pie-chart"></i>
+          <span>Survey</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i> Pertanyaan</a></li>
+          <li><a href="{{route('survey.pertayaan')}}"><i class="fa fa-circle-o"></i> Kelola Survey</a></li>
+        </ul>
+      </li>
+      {{-- <li>
+        <a href="{{route('survey.index')}}">
+          <i class="fa fa-th"></i> <span>Survey</span>
+          <span class="pull-right-container">
+            <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
+      </li> --}}
+      <li>
+        <a href="{{route('survey.index')}}">
+          <i class="fa fa-th"></i> <span>Survey</span>
+          <span class="pull-right-container">
+            <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
       </li>
       {{-- <li class="treeview">
         <a href="#">
@@ -684,20 +714,36 @@
                 mm = '0' + mm;
                 }
             $('#kalkulasi').click(function (){
+                $('#simulasi_table tbody tr').remove();
+                $('#simulasi_table tfoot').remove();
+                $('#jatuh_tempo').remove();
                 var harga = $('#harga').text();
                 var cicilan = $('select[name=cicilan] :selected').val();
                 var bunga = $('input[name=bunga]:checked').val();
+                var idx=0;
+                var bu_hit_baru = 0;
+                var cipok_baru = 0;
+                var tot_ang_baru = 0;
                 if(bunga=='0'){
+                    var harga_baru=harga;
                     var cipok = parseInt(harga)/parseInt(cicilan);
                     var bu_hit = parseInt(harga)*0.25/12;
                     var angsuran = parseInt(cipok)+parseInt(bu_hit);
+                    while(idx<cicilan){
+                        console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
+                        bu_hit_baru = parseInt(bu_hit_baru)+parseInt(bu_hit);
+                        cipok_baru = parseInt(cipok_baru)+parseInt(cipok);
+                        ci_bul.push(Math.round(bu_hit));
+                        var tot_ang = parseInt(cipok)+parseInt(bu_hit);
+                        tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
+                        harga_baru = harga_baru-cipok;
+                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
+                        idx++;
+                    }
+                    $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
                 }else{
                     var cipok = parseInt(harga)/parseInt(cicilan);
-                    var idx=0;
-                    var harga_baru=harga;
-                    var bu_hit_baru = 0;
-                    var cipok_baru = 0;
-                    var tot_ang_baru = 0;
+
                     while(idx<cicilan){
                         var bu_hit = (parseInt(harga)-(parseInt(idx)*parseInt(cipok)))*0.25/12;
                         console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
@@ -713,8 +759,9 @@
                     $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
                 }
                 today = mm + '/' + dd + '/' + yyyy;
-                $('<h3>Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));
+                $('<h3 id="jatuh_tempo">Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));
                 $('#proses_simpan').css('display','block');
+
                 // console.log('harga = '+harga);
                 // console.log('cicilan = '+cicilan);
                 // console.log('bunga = '+bunga);
@@ -736,6 +783,7 @@
                     'suku_bunga':$('input[name=bunga]:checked').val(),
                     'cicilan': ci_bul,
                     'jatuh_tempo': now,
+                    'pelanggan_id': $('#pelanggan_id').val(),
                 },
                 success: function(data) {
                     if ((data.errors)){
@@ -743,6 +791,7 @@
                         $('.error').text(data.errors.name);
                     }
                     else {
+                        window.location.href = "/kredit/status/cek";
                         }
                     },
                 });

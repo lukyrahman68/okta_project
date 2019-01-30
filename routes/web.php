@@ -41,7 +41,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('kredit', 'KreditController');
     Route::resource('barang', 'BarangController');
     Route::resource('approve', 'ApproveController');
-    Route::resource('survey', 'SurveyController');
     Route::get('survey/{id}/detail','SurveyController@bukti_survey')->name('survey.bukti_survey');
     Route::get('kredit/{id}/detail','KreditController@kredit_detail')->name('kredit.detail');
     Route::get('kredit/status/cek','KreditController@status')->name('kredit.status');
@@ -52,6 +51,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('approve/cari_img/{id}', 'ApproveController@cari_img')->name('cari_img');
     Route::get('kredit/proses/index/{id}', 'KreditController@proses')->name('kredit.proses');
     Route::post('kredit/proses/simpan', 'KreditController@simpan')->name('kredit.simpan');
+    Route::get('kredit/history/index', 'KreditController@history')->name('kredit.history');
+
+    //survey
+    Route::resource('survey', 'SurveyController');
+    Route::get('survey/pertayaan/proses','SurveyController@pertayaan')->name('survey.pertayaan');
+    Route::get('survey/pertayaan/proses/{id}/olah','SurveyController@olah')->name('survey.olah');
+    Route::post('survey/pertayaan/proses/simpan','SurveyController@simpan')->name('survey.simpan');
 });
 Auth::routes();
 Route::get('tes', function () {

@@ -14,7 +14,8 @@
                     <div class="col-md-6">
                         No Kontrak: <b>{{$pelanggan->no_kontrak}}</b><br>
                         Nama: <b>{{$pelanggan->nama}}</b><br>
-                        <input type="hidden" name="kredit_id" id="kredit_id" value="{{$pelanggan->id}}">
+                        <input type="hidden" name="kredit_id" id="kredit_id" value="{{$pelanggan->kredit_id}}">
+                        <input type="hidden" name="pelanggan_id" id="pelanggan_id" value="{{$pelanggan->pelanggan_id}}">
                     </div>
                     <div class="col-md-6">
                         <table class="table">

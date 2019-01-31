@@ -542,12 +542,11 @@
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
-        $('#btn_detail').click(function (){
             $('#add_media').remove();
             $('<div id="add_media"></div>').appendTo('#media');
             $.ajax({
                     type: 'get',
-                    url: '/approve/cari_img/'+$('#btn_detail').attr('value'),
+                    url: '/approve/cari_img/'+$('#id_pelanggan').val(),
                     data: {
                         // '_token': $('input[name=_token]').val(),
                         // 'id': $('#btn_detail').attr('value'),
@@ -561,15 +560,16 @@
                              $.each(data, function (i) {
                                 // console.log(data[i].nama);
                                 var base_url = window.location.origin;
-                                $('#add_media').prepend('<label>'+data[i].ket+'</label>');
-                                $('#add_media').prepend('<img src="'+base_url+'/images/'+data[i].pelanggan_id+'/'+data[i].nama+'" class="img-thumbnail">');
+                                // $('#add_media').prepend('');
+                                $('#add_media').prepend('<div class="col-md-3"><label>'+data[i].ket+'</label><img src="'+base_url+'/images/'+data[i].pelanggan_id+'/'+data[i].nama+'" class="img-re" style="width:100%;height:100%"></div>');
+                                // $('#add_media').prepend('');
+                                // $('#add_media').prepend('</div>');
                              });
                             // $("#add_media").append("Oke");
                         }
                     }
 
             });
-        });
     });
 </script>
 </body>

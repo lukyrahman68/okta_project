@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Kredit;
 use App\Pelanggan;
+use App\Survey;
 use Response;
 
 class ApproveController extends Controller
@@ -55,5 +56,19 @@ class ApproveController extends Controller
                             ->selectRaw('media.*')
                             ->get();
         return response()->json($media);
+    }
+    public function detail($id){
+        $kredit = Kredit::where('kredits.id',$id)
+                                ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
+                                ->join('barangs','kredits.barang_id','=','barangs.id')
+                                ->join('vendors','vendors.id','=','barangs.vendor_id')
+                                ->selectRaw('pelanggans.*,kredits.id as kredit_id, vendors.nama as vendor_nama, barangs.harga,barangs.nama as nama_brng')
+                                ->first();
+        $surveys = Survey::join('hasil_surveys','hasil_surveys.survey_id','surveys.id')
+                            ->where('hasil_surveys.pelanggan_id','=',$kredit->id)
+                            ->selectRaw('hasil_surveys.jawaban,surveys.pertanyaan')
+                            ->get();
+        return view('pemilik.detail',compact('kredit','surveys'));
+        // return $kredits;
     }
 }

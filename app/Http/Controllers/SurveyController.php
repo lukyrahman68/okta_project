@@ -61,12 +61,21 @@ class SurveyController extends Controller
         // return $surveys;
     }
     public function simpan(request $request){
-
-        foreach ($request->survey_id as $item ) {
+        $survey_id = $request->survey_id;
+        $pertanyaan = $request->pertanyaan;
+        // foreach ($request->survey_id as $item ) {
+        //     $hasil_survey = new hasil_survey;
+        //     $hasil_survey->pelanggan_id = $request->pelanggan_id;
+        //     $hasil_survey->survey_id = $item->survey_id;
+        // }
+        for ($i=0; $i < sizeof($request->survey_id) ; $i++) {
+            # code...
             $hasil_survey = new hasil_survey;
             $hasil_survey->pelanggan_id = $request->pelanggan_id;
-            $hasil_survey->pelanggan_id = $request->pelanggan_id;
+            $hasil_survey->survey_id = $survey_id[$i];
+            $hasil_survey->jawaban = $pertanyaan[$i];
+            $hasil_survey->save();
         }
-        return $request->all();
+        return ;
     }
 }

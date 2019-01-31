@@ -17,6 +17,7 @@ class CreateHasilSurveysTable extends Migration
             $table->increments('id');
             $table->string('pelanggan_id');
             $table->string('survey_id');
+            $table->string('jawaban');
             $table->timestamps();
         });
     }

@@ -41,7 +41,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('vendor', 'VendorController');
     Route::resource('kredit', 'KreditController');
     Route::resource('barang', 'BarangController');
+
+    //approve
     Route::resource('approve', 'ApproveController');
+    Route::get('approve/detail/{id}/pelanggan','ApproveController@detail')->name('approve.detail');
+
     Route::get('survey/{id}/detail','SurveyController@bukti_survey')->name('survey.bukti_survey');
     Route::get('kredit/{id}/detail','KreditController@kredit_detail')->name('kredit.detail');
     Route::get('kredit/status/cek','KreditController@status')->name('kredit.status');

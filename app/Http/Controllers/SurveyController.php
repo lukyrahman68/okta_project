@@ -51,13 +51,18 @@ class SurveyController extends Controller
         return redirect('/survey');
     }
     public function pertayaan(){
-        $pelanggans = Pelanggan::all()->where('sts','=','0');
+        $pelanggans = Pelanggan::all()->where('sts','=','1');
         return view('karyawan.survey.pertanyaan',compact('pelanggans'));
     }
     public function olah($id){
         $pelanggan = Pelanggan::find($id);
+        $hasilSurveys = hasil_survey::where('pelanggan_id','=',$id)
+                                    ->join('surveys','surveys.id','hasil_surveys.survey_id')
+                                    ->selectRaw('surveys.pertanyaan, hasil_surveys.jawaban, hasil_surveys.id')
+                                    ->get();
         $surveys = survey::where('jenis','like',$pelanggan->pekerjaan)->get();
-        return view('karyawan.survey.olah',compact('pelanggan','surveys'));
+        
+        return view('karyawan.survey.olah',compact('pelanggan','surveys','hasilSurveys'));
         // return $surveys;
     }
     public function simpan(request $request){
@@ -76,6 +81,16 @@ class SurveyController extends Controller
             $hasil_survey->jawaban = $pertanyaan[$i];
             $hasil_survey->save();
         }
-        return ;
+        return redirect()->route('survey.olah', $hasil_survey->pelanggan_id);
+    }
+    public function hapus_hasil($id){
+        $survey = hasil_survey::find($id);
+        $survey->delete();
+        return redirect()->route('survey.olah', $survey->pelanggan_id);
+    }
+    public function edit_hasil(request $request, $id){
+        $survey = hasil_survey::find($id);
+        $survey->update($request->all());
+        return redirect()->route('survey.olah', $survey->pelanggan_id);
     }
 }

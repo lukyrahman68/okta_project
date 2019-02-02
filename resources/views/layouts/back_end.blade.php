@@ -629,6 +629,7 @@
                 ]
             });
             $('#table_cari tbody').on('click', 'tr', function () {
+              $('#pilih').prop("disabled", false);
                 if($('#table_cari tbody tr').hasClass('selected')){
                     $("#table_cari tbody tr").attr('class', '');
                     $(this).toggleClass('selected');

@@ -51,7 +51,7 @@ class ApproveController extends Controller
         // return $kredit;
     }
     public function cari_img($id){
-        $media = Pelanggan::find($id)
+        $media = Pelanggan::where('media.pelanggan_id','=',$id)
                             ->join('media','media.pelanggan_id','=','pelanggans.id')
                             ->selectRaw('media.*')
                             ->get();

@@ -37,18 +37,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($surveys as $survey)
-                        <tr>
-                            <td>{{$survey->pertanyaan}}</td>
-                            <td>{{$survey->jawaban}}</td>
-                        </tr>
-                        @endforeach
+                        @if (count($surveys)>0)
+                            @foreach ($surveys as $survey)
+                            <tr>
+                                <td>{{$survey->pertanyaan}}</td>
+                                <td>{{$survey->jawaban}}</td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="2" style="text-align: center"> <h3>Data Survey Kosong</h3></td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
                     <form action="{{route('approve.update',$kredit->kredit_id)}}" method="POST" >
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-primary pull-right" value="Approve" style="margin-left: 10px;">
+                        <input type="submit" class="btn btn-primary pull-right" value="Approve" style="margin-left: 10px;" {{(count($surveys)>0)?'':'disabled'}}>
                     </form>
                     <a href="#" data-toggle="modal" data-target="#danger_modal" class="btn btn-danger pull-right">Tolak</a>
 

@@ -58,41 +58,45 @@
             <div class="form-group">
                 <label for="Alamat">Gaji</label>
                 <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 0 - Rp. 500.000" required>
-                    <label class="custom-control-label" for="customRadio1">Rp. 0 - Rp. 500.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 500.000 - Rp. 1.000.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 500.000 - Rp. 1.000.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 1.000.000 - Rp. 1.500.000" required>
-                    <label class="custom-control-label" for="customRadio1">Rp. 1.000.000 - Rp. 1.500.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 1.500.000 - Rp. 2.000.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 1.500.000 - Rp. 2.000.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 2.000.000 - Rp. 2.500.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 2.000.000 - Rp. 2.500.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.000.000 - Rp. 3.500.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 3.000.000 - Rp. 3.500.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.500.000 - Rp. 4.000.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 3.500.000 - Rp. 4.000.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.000.000 - Rp. 4.500.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 4.000.000 - Rp. 4.500.000</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.500.000 - Rp. 5.000.000" required>
-                    <label class="custom-control-label" for="customRadio2">Rp. 4.500.000 - Rp. 5.000.000</label>
-                </div>
+                        <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 0 - Rp. 500.000" required>
+                        <label class="custom-control-label" for="customRadio1">Rp. 0 - Rp. 500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 500.000 - Rp. 1.000.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 500.000 - Rp. 1.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 1.000.000 - Rp. 1.500.000" required>
+                        <label class="custom-control-label" for="customRadio1">Rp. 1.000.000 - Rp. 1.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 1.500.000 - Rp. 2.000.000"  required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 1.500.000 - Rp. 2.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 2.000.000 - Rp. 2.500.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 2.000.000 - Rp. 2.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 2.500.000 - Rp. 3.000.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 2.500.000 - Rp. 3.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.000.000 - Rp. 3.500.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 3.000.000 - Rp. 3.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.500.000 - Rp. 4.000.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 3.500.000 - Rp. 4.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.000.000 - Rp. 4.500.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 4.000.000 - Rp. 4.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.500.000 - Rp. 5.000.000" required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 4.500.000 - Rp. 5.000.000</label>
+                    </div>
             </div>
             <!-- Date -->
             <div class="form-group">

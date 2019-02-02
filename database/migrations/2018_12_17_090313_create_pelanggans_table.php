@@ -28,6 +28,8 @@ class CreatePelanggansTable extends Migration
             $table->string('tlpn');
             $table->string('email');
             $table->string('password');
+            $table->string('tlpn_keluarga')->default('-');
+            $table->string('tlpn_keluarga2')->default('-');
             $table->string('sts')->default('0');
             $table->timestamps();
         });

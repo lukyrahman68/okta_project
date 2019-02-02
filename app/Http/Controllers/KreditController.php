@@ -74,7 +74,7 @@ class KreditController extends Controller
         return view('karyawan.kredit.status',compact('diterimas','ditolaks'));
     }
     public function proses($id){
-        $pelanggan=Pelanggan::find($id)
+        $pelanggan=Pelanggan::where('kredits.pelanggan_id','=',$id)
                                 ->join('kredits','kredits.pelanggan_id','=','pelanggans.id')
                                 ->selectRaw('pelanggans.*,kredits.*,kredits.id as kredit_id,pelanggans.id as pelanggan_id')
                                 ->first();

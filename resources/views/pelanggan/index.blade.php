@@ -2,17 +2,15 @@
 @section('main')
 <br>
 <div class="container">
-    <a href="{{route('pelanggan.create')}}" class="btn btn-sm btn-primary">Tambah</a>
-    <br>
-    <br>
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
+              <h3 class="box-title">Informasi Pembayaran</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
+            
               <table class="table table-hover" id="myTable">
                 <thead>
                     <tr>
@@ -22,13 +20,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{--@foreach ($transaksi as $transaksi)
+                    
                   <tr>
-                      <td>{{$pelanggan->nik}}</td>
-                      <td>{{$pelanggan->nama}}</td>
-                      <td>{{$pelanggan->jk}}</td>
+                        @foreach ($tenor as $tenor)
+                      <td>{{$tenor->lama_cicilan}} Bulan</td>
+                      @if($status==0)
+                          <td>0</td><td>{{$tenor->lama_cicilan}} Bulan</td>
+                          @else
+                          <td>{{ $hitung }} Bulan</td><td>{!! $tenor->lama_cicilan-$hitung !!} Bulan</td>
+                      @endif
+                      @endforeach
+                      
                   </tr>
-                  @endforeach--}}
+                  
                 </tbody>
               </table>
             </div>

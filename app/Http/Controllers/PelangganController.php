@@ -20,7 +20,10 @@ class PelangganController extends Controller
     }
     public function login(request $request){
         $pelanggan= Pelanggan::where('email','=',$request->email)->where('password','=',$request->password);
+        $pelanggan2= Pelanggan::where('email','=',$request->email)->where('password','=',$request->password)->first();
         if ($pelanggan->count()) {
+            session(['nik' => $pelanggan2->nik]);
+            session(['id'=>$pelanggan2->id]);
             return redirect('halpelanggan');
         }else{
             return redirect('loginpelanggan')->with('alert','Email / Password salah');

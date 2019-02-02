@@ -2,9 +2,6 @@
 @section('main')
 <br>
 <div class="container">
-    <a href="{{route('pelanggan.create')}}" class="btn btn-sm btn-primary">Tambah</a>
-    <br>
-    <br>
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -13,10 +10,18 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-              <form method="post" action="{{ route('uploadpembayaran') }}" enctype="multipart/form-data">
+              <form method="post" action="{{ route('uploadberkaspembayaran') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="form-group">
-                    <label for="upload1">KTP</label>
-                    <input type="file" class="form-control" name="ktp" required>
+                    <label for="upload1">Foto struk</label>
+                    <input type="file" class="form-control" name="upload1" required>
+                </div>
+                <div class="form-group">
+                    <label for="upload2">Foto selfi dengan struk</label>
+                    <input type="file" class="form-control" name="upload2" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit"  name="kirim" value="Kirim">
                 </div>
               </form>
             </div>

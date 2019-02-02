@@ -158,12 +158,12 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li>
-        <a href="{{route('pelanggan.index')}}">
+        <a href="{{route('dashboardpelanggan')}}">
           <i class="fa fa-th"></i> <span>Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="{{route('pelanggan.index')}}">
+        <a href="{{route('informasikredit')}}">
           <i class="fa fa-th"></i> <span>Informasi Kredit</span>
         </a>
       </li>
@@ -176,8 +176,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{route('vendor.index')}}"><i class="fa fa-circle-o"></i> Upload Pembayaran</a></li>
-          <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> Jadwal Pembayaran</a></li>
+          <li><a href="{{route('uploadpembayaran')}}"><i class="fa fa-circle-o"></i> Upload Pembayaran</a></li>
+          <li><a href="{{route('jadwalpembayaran')}}"><i class="fa fa-circle-o"></i> Jadwal Pembayaran</a></li>
         </ul>
       </li>
     </ul>

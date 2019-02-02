@@ -19,8 +19,49 @@ Route::get('/loginpelanggan', function () {
 })->name('b');
 Route::post('pelangganlogin', 'PelangganController@login')->name('pelangganlogin');
 Route::get('halpelanggan', function () {
-    return view('pelanggan.index');
-});
+    if (session()->has('nik')) {
+        $tenor = App\Kredit::where('kredits.sts',4)
+                                    ->where('pelanggans.nik','=',session('nik'))
+                                    ->join('kredit_details','kredit_details.kredit_id','=','kredits.id')
+                                    ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
+                                    ->get();
+        $bayar = App\Pembayaran::where('pelanggan_id','=',session('id'))->get();
+        $status=0;
+        $hitung=0;
+        if ($bayar->count()){
+            $status=1;
+            $hitung=$bayar->count();
+        }
+        return view('pelanggan.index',compact('tenor','bayar','status','hitung'));
+    }
+    return redirect()->route('b');
+})->name('dashboardpelanggan');
+Route::get('uploadpembayaran', function () {
+    if (session()->has('nik')) {
+        return view('pelanggan.upload');
+    }
+    return redirect()->route('b');
+})->name('uploadpembayaran');
+Route::post('uploadberkaspembayaran', 'PembayaranController@store')->name('uploadberkaspembayaran');
+Route::get('jadwalpembayaran', function () {
+    if (session()->has('nik')) {
+        return view('pelanggan.jadwalpembayaran');
+    }
+    return redirect()->route('b');
+})->name('jadwalpembayaran');
+Route::get('informasikredit', function () {
+    if (session()->has('nik')) {
+        $kredit = App\Kredit::where('kredits.sts',4)->where('kredits.pelanggan_id','=',session('id'))
+                            ->join('barangs','barangs.id','=','kredits.barang_id')
+                            ->join('pelanggans','pelanggans.id','=','kredits.pelanggan_id')
+                            ->join('kredit_details','kredit_details.kredit_id','=','kredits.id')
+                            ->selectraw('*, barangs.nama a')
+                            ->get();
+        return view('pelanggan.informasi',compact('kredit'));
+    }
+    return redirect()->route('b');
+    
+})->name('informasikredit');
 Route::get('/tes2', function () {
     return view('pemilik.index');
 });

@@ -10,50 +10,126 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="NIK">NIK</label>
-                <input type="text" class="form-control" placeholder="NIK" name="nik" value="{{$pelanggan->nik}}">
-            </div>
-            <div class="form-group">
-                <label for="Nama">Nama</label>
-                <input type="text" class="form-control" placeholder="Nama" name="nama" value="{{$pelanggan->nama}}">
-            </div>
-            <div class="form-group">
-                <label for="Alamat">Alamat</label>
-                <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="{{$pelanggan->alamat}}">
-            </div>
-            <div class="form-group">
+                    <label for="NIK">NIK</label>
+                    <input type="text" class="form-control" placeholder="NIK" name="nik" value="{{$pelanggan->nik}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="Nama">Nama</label>
+                    <input type="text" class="form-control" placeholder="Nama" name="nama" value="{{$pelanggan->nama}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="Alamat">Alamat</label>
+                    <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="{{$pelanggan->alamat}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="Alamat">Keterangan Alamat</label>
+                    <input type="text" class="form-control" placeholder="Keterangan Alamat" name="ket_alamat" value="{{$pelanggan->ket_alamat}}" required>
+                </div>
+                <div class="form-group">
                     <label for="Alamat">Jenis Kelamin</label>
                     <div class="row">
                         <div class="col-md-2">
                             <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="jk" class="custom-control-input" value="Laki - Laki" {{($pelanggan->jk== 'Laki - Laki') ?  "checked" : "" }}>
+                            <input type="radio" id="customRadio1" name="jk" class="custom-control-input" value="Laki - Laki" {{($pelanggan->jk=='Laki - Laki')?'checked':''}} required>
                             <label class="custom-control-label" for="customRadio1">Laki - Laki</label>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="jk" class="custom-control-input" value="Perempuan" {{($pelanggan->jk== 'Perempuan') ?  "checked" : "" }}>
+                            <input type="radio" id="customRadio2" name="jk" class="custom-control-input" value="Perempuan" {{($pelanggan->jk=='Perempuan')?'checked':''}} required>
                             <label class="custom-control-label" for="customRadio2">Perempuan</label>
                             </div>
                         </div>
                     </div>
                 </div>
-            <div class="form-group">
-                <label for="TTL">TTL</label>
-                <input type="text" class="form-control" placeholder="TTL" name="ttl" value="{{$pelanggan->ttl}}">
-            </div>
-            <div class="form-group">
-                <label for="Telphone">Telphone</label>
-                <input type="text" class="form-control" placeholder="Telphone" name="tlpn" value="{{$pelanggan->tlpn}}">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="Email" name="email" value="{{$pelanggan->email}}">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" placeholder="Password" name="password" value="{{$pelanggan->password}}">
-            </div>
+                <div id="form-pekerjaan">
+                    <div class="form-group">
+                        <label for="Alamat">Pekerjaan</label>
+                        <select name="pekerjaan" id="pekerjaan" class="form-control">
+                            <option value="" disabled>Pilih Pekerjaan</option>
+                            <option value="Polisi" {{($pelanggan->pekerjaan=='Polisi')?'selected':''}}>Polisi</option>
+                            <option value="TNI" {{($pelanggan->pekerjaan=='TNI')?'selected':''}}>TNI</option>
+                            <option value="Guru" {{($pelanggan->pekerjaan=='Guru')?'selected':''}}>Guru</option>
+                            <option value="Swasta" {{($pelanggan->pekerjaan=='Swasta')?'selected':''}}>Swasta</option>
+                            <option value="Wiraswasta" {{($pelanggan->pekerjaan=='Wiraswasta')?'selected':''}}>Wiraswasta</option>
+                            <option value="other" {{($pelanggan->pekerjaan=='other')?'selected':''}}>other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Alamat">Gaji</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 0 - Rp. 500.000" {{($pelanggan->gaji=='Rp. 0 - Rp. 500.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio1">Rp. 0 - Rp. 500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 500.000 - Rp. 1.000.000" {{($pelanggan->gaji=='Rp. 500.000 - Rp. 1.000.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 500.000 - Rp. 1.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="gaji" class="custom-control-input" value="Rp. 1.000.000 - Rp. 1.500.000" {{($pelanggan->gaji=='Rp. 1.000.000 - Rp. 1.500.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio1">Rp. 1.000.000 - Rp. 1.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 1.500.000 - Rp. 2.000.000" {{($pelanggan->gaji=='Rp. 1.500.000 - Rp. 2.000.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 1.500.000 - Rp. 2.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 2.000.000 - Rp. 2.500.000" {{($pelanggan->gaji=='Rp. 2.000.000 - Rp. 2.500.000')?'selected':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 2.000.000 - Rp. 2.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 2.500.000 - Rp. 3.000.000" {{($pelanggan->gaji=='Rp. 2.500.000 - Rp. 3.000.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 2.500.000 - Rp. 3.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.000.000 - Rp. 3.500.000" {{($pelanggan->gaji=='Rp. 3.000.000 - Rp. 3.500.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 3.000.000 - Rp. 3.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 3.500.000 - Rp. 4.000.000" {{($pelanggan->gaji=='Rp. 3.500.000 - Rp. 4.000.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 3.500.000 - Rp. 4.000.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.000.000 - Rp. 4.500.000" {{($pelanggan->gaji=='Rp. 4.000.000 - Rp. 4.500.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 4.000.000 - Rp. 4.500.000</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="gaji" class="custom-control-input" value="Rp. 4.500.000 - Rp. 5.000.000" {{($pelanggan->gaji=='Rp. 4.500.000 - Rp. 5.000.000')?'checked':''}} required>
+                        <label class="custom-control-label" for="customRadio2">Rp. 4.500.000 - Rp. 5.000.000</label>
+                    </div>
+                </div>
+                <!-- Date -->
+                <div class="form-group">
+                        <label>Date:</label>
+    
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="datepicker" name="ttl" value="{{$pelanggan->ttl}}" required>
+                        </div>
+                        <!-- /.input group -->
+                      </div>
+                      <!-- /.form group -->
+                <div class="form-group">
+                    <label for="Telphone">Telphone</label>
+                    <input type="text" class="form-control" placeholder="Telphone" name="tlpn" value="{{$pelanggan->tlpn}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="email" value="{{$pelanggan->email}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" placeholder="Password" name="password" value="{{$pelanggan->password}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">No Tephone Keluarga</label>
+                    <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga" value="{{$pelanggan->tlpn_keluarga}}" required>
+                    <label for="email">No Tephone Keluarga 2</label>
+                    <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga2" value="{{$pelanggan->tlpn_keluarga2}}" required>
+                </div>
             <div class="card" style="padding:1em;border:1px solid #eee;">
                 <div class="card-body">
                     <div class="card-title"> Upload Photo</div>

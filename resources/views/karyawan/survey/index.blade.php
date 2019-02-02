@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="">Pertanyaan</label>
-                    <input type="text" class="form-control" name="pertanyaan" placeholder="Pertanyaan">
+                    <input type="text" class="form-control" name="pertanyaan" placeholder="Pertanyaan" required>
                 </div>
                 <div class="form-group">
                     <label for="">Jenis</label>
@@ -90,7 +90,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="">Pertanyaan</label>
-                                    <input type="text" class="form-control" name="pertanyaan" placeholder="Pertanyaan" value="{{$survey->pertanyaan}}">
+                                    <input type="text" class="form-control" name="pertanyaan" placeholder="Pertanyaan" value="{{$survey->pertanyaan}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Jenis</label>

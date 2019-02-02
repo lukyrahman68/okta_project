@@ -63,6 +63,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('survey/pertayaan/proses','SurveyController@pertayaan')->name('survey.pertayaan');
     Route::get('survey/pertayaan/proses/{id}/olah','SurveyController@olah')->name('survey.olah');
     Route::post('survey/pertayaan/proses/simpan','SurveyController@simpan')->name('survey.simpan');
+    Route::delete('survey/pertayaan/proses/{id}/hapus','SurveyController@hapus_hasil')->name('survey.hapus_hasil');
+    Route::PUT('survey/pertayaan/proses/{id}/edit','SurveyController@edit_hasil')->name('survey.edit_hasil');
 
     //laporan
     Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');

@@ -41,7 +41,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('vendor', 'VendorController');
     Route::resource('kredit', 'KreditController');
     Route::resource('barang', 'BarangController');
+
+    //approve
     Route::resource('approve', 'ApproveController');
+    Route::get('approve/detail/{id}/pelanggan','ApproveController@detail')->name('approve.detail');
+
     Route::get('survey/{id}/detail','SurveyController@bukti_survey')->name('survey.bukti_survey');
     Route::get('kredit/{id}/detail','KreditController@kredit_detail')->name('kredit.detail');
     Route::get('kredit/status/cek','KreditController@status')->name('kredit.status');
@@ -59,6 +63,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('survey/pertayaan/proses','SurveyController@pertayaan')->name('survey.pertayaan');
     Route::get('survey/pertayaan/proses/{id}/olah','SurveyController@olah')->name('survey.olah');
     Route::post('survey/pertayaan/proses/simpan','SurveyController@simpan')->name('survey.simpan');
+
+    //laporan
+    Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');
+    Route::get('laporan/pendapatan','PembayaranController@pendapatan')->name('laporan.pendapatan');
+    Route::get('laporan/piutang','PembayaranController@piutang')->name('laporan.piutang');
 });
 Auth::routes();
 Route::get('tes', function () {

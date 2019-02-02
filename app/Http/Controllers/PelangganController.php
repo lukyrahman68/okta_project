@@ -18,13 +18,13 @@ class PelangganController extends Controller
     public function create(){
         return view('karyawan.pelanggan.tambah');
     }
-    public function login(){
-        /*$pelanggan= Pelanggan::where('email','=',$request->email)->where('password','',$request->password);
-        if ($result->count()) {
-            return view('karyawan.pelanggan.index');
+    public function login(request $request){
+        $pelanggan= Pelanggan::where('email','=',$request->email)->where('password','=',$request->password);
+        if ($pelanggan->count()) {
+            return redirect('pelanggan');
         }else{
-            return view('karyawan.pelanggan.login');
-        }*/
+            return redirect('loginpelanggan')->with('alert','Email / Password salah');
+        }
     }
     public function store(request $request){
         $input = $request->all();

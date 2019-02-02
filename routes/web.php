@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 Route::get('/loginpelanggan', function () {
     return view('karyawan.pelanggan.login');
-});
-Route::get('pelangganlogin', 'PelangganController@login');
+})->name('b');
+Route::post('pelangganlogin', 'PelangganController@login')->name('a');
 Route::get('/tes2', function () {
     return view('pemilik.index');
 });

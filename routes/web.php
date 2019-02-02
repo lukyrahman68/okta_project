@@ -63,6 +63,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('survey/pertayaan/proses','SurveyController@pertayaan')->name('survey.pertayaan');
     Route::get('survey/pertayaan/proses/{id}/olah','SurveyController@olah')->name('survey.olah');
     Route::post('survey/pertayaan/proses/simpan','SurveyController@simpan')->name('survey.simpan');
+
+    //laporan
+    Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');
+    Route::get('laporan/pendapatan','PembayaranController@pendapatan')->name('laporan.pendapatan');
+    Route::get('laporan/piutang','PembayaranController@piutang')->name('laporan.piutang');
 });
 Auth::routes();
 Route::get('tes', function () {

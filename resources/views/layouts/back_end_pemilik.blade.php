@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->
@@ -154,22 +156,22 @@
           </span>
         </a>
       </li>
-      {{-- <li class="treeview">
+      <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
-          <span>Charts</span>
+          <span>Laporan</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-          <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+          <li><a href="{{route('laporan.pembayaran')}}"><i class="fa fa-circle-o"></i> Pembayaran</a></li>
+          <li><a href="{{route('laporan.piutang')}}"><i class="fa fa-circle-o"></i> Piutang</a></li>
+          <li><a href="{{route('laporan.pendapatan')}}"><i class="fa fa-circle-o"></i> Pendapatan</a></li>
         </ul>
       </li>
-      <li class="treeview">
+      
+      {{-- <li class="treeview">
         <a href="#">
           <i class="fa fa-laptop"></i>
           <span>UI Elements</span>
@@ -531,6 +533,8 @@
 <script src="{{asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+<!-- datepicker -->
+<script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -541,6 +545,10 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
+        //Date picker
+        $('.datepicker').datepicker({
+              autoclose: true
+        });
         $('#myTable').DataTable();
             $('#add_media').remove();
             $('<div id="add_media"></div>').appendTo('#media');

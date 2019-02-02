@@ -40,7 +40,7 @@
                     <div>{{Session::get('alert')}}</div>
                 </div>
             @endif
-    <form action="{{route('a')}}" method="post">
+    <form action="{{route('pelangganlogin')}}" method="post">
     @csrf
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email">

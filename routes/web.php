@@ -131,3 +131,5 @@ return view('tes',compact('data'));
 });
 Route::post('addItem','KreditController@tes')->name('tes');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/tes', 'HomeController@tes')->name('home');
+

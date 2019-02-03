@@ -78,7 +78,7 @@
 
                         </tbody>
                     </table>
-                    <button type="submit" class="btn btn-primary pull-right" id="pilih" disabled="disabled">Pilih</button>
+                    <button type="submit" class="btn btn-primary pull-right" id="button" disabled="disabled">Pilih</button>
                 </form>
             </div>
         </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>UD WAWA COLECTION | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -60,9 +60,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>W</b>W</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>WAWA</b>COLECTION</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -76,38 +76,22 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{Auth::user()->name}}
                 </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{route('profile.index')}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ route('logout') }}" class="btn btn-default btn-flat"  onclick="event.preventDefault();
@@ -136,23 +120,13 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="user-image " alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>{{Auth::user()->name}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
-      </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
+      </div><br>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
@@ -629,7 +603,7 @@
                 ]
             });
             $('#table_cari tbody').on('click', 'tr', function () {
-              $('#pilih').prop("disabled", false);
+              $('#button').prop("disabled", false);
                 if($('#table_cari tbody tr').hasClass('selected')){
                     $("#table_cari tbody tr").attr('class', '');
                     $(this).toggleClass('selected');
@@ -725,18 +699,20 @@
                 var bu_hit_baru = 0;
                 var cipok_baru = 0;
                 var tot_ang_baru = 0;
+                var harga_baru=harga;
                 if(bunga=='0'){
-                    var harga_baru=harga;
+                    
                     var cipok = parseInt(harga)/parseInt(cicilan);
-                    var bu_hit = parseInt(harga)*0.25/12;
+                    var bu_hit = Math.ceil(parseInt(harga)*0.25/12);
                     var angsuran = parseInt(cipok)+parseInt(bu_hit);
                     while(idx<cicilan){
-                        console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
+                        // console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
                         bu_hit_baru = parseInt(bu_hit_baru)+parseInt(bu_hit);
                         cipok_baru = parseInt(cipok_baru)+parseInt(cipok);
                         ci_bul.push(Math.round(bu_hit));
                         var tot_ang = parseInt(cipok)+parseInt(bu_hit);
                         tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
+                        console.log(cipok);
                         harga_baru = harga_baru-cipok;
                         $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
                         idx++;
@@ -746,13 +722,14 @@
                     var cipok = parseInt(harga)/parseInt(cicilan);
 
                     while(idx<cicilan){
-                        var bu_hit = (parseInt(harga)-(parseInt(idx)*parseInt(cipok)))*0.25/12;
-                        console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
+                        var bu_hit = Math.ceil((parseInt(harga)-(parseInt(idx)*parseInt(cipok)))*0.25/12);
+                        // console.log('('+harga+'-('+idx+'*'+cipok+'))*0.25/12');
                         bu_hit_baru = parseInt(bu_hit_baru)+parseInt(bu_hit);
                         cipok_baru = parseInt(cipok_baru)+parseInt(cipok);
                         ci_bul.push(Math.round(bu_hit));
                         var tot_ang = parseInt(cipok)+parseInt(bu_hit);
                         tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
+                        console.log(harga_baru+' - '+cipok);
                         harga_baru = harga_baru-cipok;
                         $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
                         idx++;

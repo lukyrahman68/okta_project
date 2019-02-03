@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Kredit;
 use App\Pelanggan;
 use App\Survey;
+use App\Pembayaran;
 use Response;
 
 class ApproveController extends Controller
@@ -70,5 +71,30 @@ class ApproveController extends Controller
                             ->get();
         return view('pemilik.detail',compact('kredit','surveys'));
         // return $kredits;
+    }
+    public function pembayaran_index(){
+        $pembayarans = Pembayaran::where('status','=','0')
+                                    ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+                                    ->join('kredits','kredits.pelanggan_id','pelanggans.id')
+                                    ->join('vendors','vendors.id','kredits.vendor_id')
+                                    ->join('barangs','barangs.id','kredits.barang_id')
+                                    ->selectRaw('pelanggans.nama as nama_pelanggan,vendors.nama as nama_vendor,barangs.nama as nama_barang,pembayarans.*')
+                                    ->get();
+        return view('pemilik.pembayaran.index', compact('pembayarans'));
+        // return $pembayarans;
+    }
+    public function pembayaran_approve($id){
+        //status 1 diterima
+        $pembayaran = Pembayaran::find($id);
+        $pembayaran->status = '1';
+        $pembayaran->save();
+        return redirect()->route('pembayaran.index');
+    }
+    public function pembayaran_tolak($id){
+        //status 2 ditolak
+        $pembayaran = Pembayaran::find($id);
+        $pembayaran->status = '2';
+        $pembayaran->save();
+        return redirect()->route('pembayaran.index');
     }
 }

@@ -35,8 +35,8 @@ class PembayaranController extends Controller
             $status++;
         }
         if($status==2){
-            $image1->move(public_path('struk'),$img1);
-            $image2->move(public_path('selfi'),$img2);
+            $image1->move(public_path('struk/'.$a->pelanggan_id),$img1);
+            $image2->move(public_path('selfi/'.$a->pelanggan_id),$img2);
         }
         return redirect()->route('uploadpembayaran');
     }

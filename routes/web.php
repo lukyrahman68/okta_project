@@ -25,7 +25,9 @@ Route::get('halpelanggan', function () {
                                     ->join('kredit_details','kredit_details.kredit_id','=','kredits.id')
                                     ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                     ->get();
-        $bayar = App\Pembayaran::where('pelanggan_id','=',session('id'))->get();
+        $bayar = App\Pembayaran::where('pelanggan_id','=',session('id'))
+                                    ->where('status','=','1')                            
+                                    ->get();
         $status=0;
         $hitung=0;
         if ($bayar->count()){
@@ -87,6 +89,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('barang', 'BarangController');
 
     //approve
+    Route::get('approve/pembayaran','ApproveController@pembayaran_index')->name('pembayaran.index');
+    Route::get('approve/pembayaran{id}/approve','ApproveController@pembayaran_approve')->name('pembayaran.approve');
+    Route::get('approve/pembayaran{id}/tolak','ApproveController@pembayaran_tolak')->name('pembayaran.tolak');
     Route::resource('approve', 'ApproveController');
     Route::get('approve/detail/{id}/pelanggan','ApproveController@detail')->name('approve.detail');
 
@@ -114,6 +119,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');
     Route::get('laporan/pendapatan','PembayaranController@pendapatan')->name('laporan.pendapatan');
     Route::get('laporan/piutang','PembayaranController@piutang')->name('laporan.piutang');
+
+    //profile
+    Route::resource('profile', 'ProfileController');
+    
 });
 Auth::routes();
 Route::get('tes', function () {

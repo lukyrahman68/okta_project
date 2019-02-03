@@ -27,7 +27,7 @@
                 <label>Tenor : </label>{{$kredit->lama_cicilan}} Bulan
               </div>
               <div class="form-group">
-                <label>Suku Bunga : </label>{{$kredit->suku_bunga}}%
+                <label>Suku Bunga : </label> {{($kredit->suku_bunga=='0')?'Flat':'Efective'}}
               </div>
             @endforeach
             </div>

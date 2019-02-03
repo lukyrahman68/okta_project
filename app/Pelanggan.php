@@ -20,6 +20,8 @@ class Pelanggan extends Model
         'tlpn',
         'email',
         'password',
-        'sts'
+        'sts',
+        'img1',
+        'img2',
     ];
 }

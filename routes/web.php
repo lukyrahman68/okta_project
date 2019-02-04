@@ -11,6 +11,7 @@
 |
 */
 use Illuminate\Support\Facades\Auth;
+use App\Pelanggan;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -72,7 +73,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/admin', function () {
     $user = Auth::user();
         if (!$user->is_owner) {
-            return view('karyawan.index');
+            $pelanggans = Pelanggan::all()->where('sts','!=','4');
+            return view('karyawan.kredit.index',compact('pelanggans'));
         } else {
             $kredits = App\Kredit::where('kredits.sts',0)
                                     ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')

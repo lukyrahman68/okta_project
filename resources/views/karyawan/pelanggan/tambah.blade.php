@@ -101,7 +101,6 @@
             <!-- Date -->
             <div class="form-group">
                     <label>Date:</label>
-
                     <div class="input-group date">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>

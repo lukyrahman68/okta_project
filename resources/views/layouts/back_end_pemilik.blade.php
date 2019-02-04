@@ -238,6 +238,14 @@
         </a>
       </li>
       <li>
+        <a href="{{route('karyawan.tambah')}}">
+          <i class="fa fa-th"></i> <span> Tambah Karyawan</span>
+          <span class="pull-right-container">
+            <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
+      </li>
+      <li>
         <a href="{{route('pembayaran.index')}}">
           <i class="fa fa-th"></i> <span> Approval Pembayaran</span>
           <span class="pull-right-container">

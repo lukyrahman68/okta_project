@@ -68,6 +68,13 @@ Route::get('informasikredit', function () {
 Route::get('/tes2', function () {
     return view('pemilik.index');
 });
+Route::get('/tambahkaryawan', function () {
+    return view('pemilik.register');
+})->name('karyawan.tambah');
+Route::get('/tambahkaryawana', function () {
+    $a=1;
+    return view('pemilik.register',compact('a'));
+})->name('karyawan.tambah');
 Route::group(['middleware' => ['auth']], function() {
     // your routes
     Route::get('/admin', function () {

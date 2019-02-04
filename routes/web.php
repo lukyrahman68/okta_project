@@ -75,6 +75,9 @@ Route::get('/tambahkaryawana', function () {
     $a=1;
     return view('pemilik.register',compact('a'));
 })->name('karyawan.tambah');
+Route::get('/simulasi', function () {
+    return view('karyawan.pelanggan.simulasi');
+})->name('simulasi');
 Route::group(['middleware' => ['auth']], function() {
     // your routes
     Route::get('/admin', function () {

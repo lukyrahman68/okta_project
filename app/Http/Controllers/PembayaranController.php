@@ -9,32 +9,92 @@ class PembayaranController extends Controller
 {
     //
     public function pembayaran(){
+        
         return view('laporan.pembayaran');
     }
     public function piutang(){
-        return view('laporan.piutang');
+        $status = 'awal';
+        return view('laporan.piutang',compact('status'));
     }
     public function pendapatan(){
-        return view('laporan.pendapatan');
+        $status = 'awal';
+        return view('laporan.pendapatan',compact('status'));
     }
     public function pendapatan2(request $request){
-        $a=$request->awal;
-        $b=$request->akhir;
+        // return $request->all();
+        $status = 'lanjut';
+        $total = 0;
+        $tgl_awal=date('Y-m-d', strtotime($request->awal));
+        $tgl_akhir=date('Y-m-d', strtotime($request->akhir));
         $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
                 ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
+                ->join('barangs','barangs.id','kredits.barang_id')
+                ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+                ->whereBetween('pembayarans.created_at', array($tgl_awal,$tgl_akhir))
+                ->selectRaw('pelanggans.nama as nama_pelanggan, kredits.no_kontrak, barangs.nama as nama_barang,barangs.harga as harga,pembayarans.angsuran_ke, kredit_details.suku_bunga, kredit_details.cicilan, pembayarans.created_at as tgl, kredit_details.lama_cicilan')
                 ->get();
-                //$kredit=$a;
-        return view('laporan.pendapatan',compact('kredit'));
+        foreach ($kredit as $item) {
+            # code...
+            $cicilan = unserialize($item->cicilan);
+            $item->cicilan = unserialize($item->cicilan);
+            $item->pendapatan = ($item->harga/$item->lama_cicilan)+$cicilan[$item->angsuran_ke-1];
+            $item->coba = $cicilan[$item->angsuran_ke-1];
+            $total = $total + $item->pendapatan;
+        }
+        // return $kredit;
+        return view('laporan.pendapatan',compact('kredit','status','total'));
         
     }
     public function piutang2(request $request){
-        $a=date("Y-m-d", $request->get('awal'));
-        $b=date("Y-m-d", $request->get('akhir'));
-        //$b=$request->get('akhir');
-        $kredit = kredit::whereBetween('pembayarans.created_at',array($a.' 00:00:00',$b.' 23:59:59'))
-                ->join('kredit_details','kredits.id','=','kredit_details.kredit_id')
-                ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')->get();
-        return view('laporan.piutang',compact('kredit'));
+        // $a=date("Y-m-d", $request->get('awal'));
+        // $b=date("Y-m-d", $request->get('akhir'));
+        // //$b=$request->get('akhir');
+        // $kredit = kredit::whereBetween('pembayarans.created_at',array($a.' 00:00:00',$b.' 23:59:59'))
+        //         ->join('kredit_details','kredits.id','=','kredit_details.kredit_id')
+        //         ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')->get();
+        // return view('laporan.piutang',compact('kredit'));
+
+        //Luky Code
+        $status = 'lanjut';
+        $total = 0;
+        $tgl_awal=date('Y-m-d', strtotime($request->awal));
+        $tgl_akhir=date('Y-m-d', strtotime($request->akhir));
+        $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
+                        ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
+                        ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+                        ->whereBetween('pembayarans.created_at', array($tgl_awal,$tgl_akhir))
+                        ->selectRaw('pelanggans.nama, kredits.no_kontrak,barangs.nama as nama_barang,barangs.harga, count(pembayarans.angsuran_ke) as total_angsuran, kredit_details.suku_bunga, kredit_details.cicilan, kredit_details.lama_cicilan,kredit_details.created_at as tgl')
+                        ->groupBy('pelanggans.nama', 'kredits.no_kontrak','barangs.nama','barangs.harga','kredit_details.suku_bunga', 'kredit_details.cicilan', 'kredit_details.lama_cicilan','kredit_details.created_at')
+                        ->get();
+        // $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
+        //         ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
+        //         ->join('barangs','barangs.id','kredits.barang_id')
+        //         ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+        //         ->whereBetween('pembayarans.created_at', array($tgl_awal,$tgl_akhir))
+        //         ->selectRaw('pelanggans.nama, kredits.no_kontrak, barangs.nama as nama_barang,barangs.harga as harga,pembayarans.angsuran_ke, kredit_details.suku_bunga, kredit_details.cicilan, pembayarans.created_at as tgl, kredit_details.lama_cicilan')
+        //         ->get();
+        foreach ($kredit as $item) {
+            # code...
+            $a = 0;
+            $total_kredit = 0;
+
+            $cicilan = unserialize($item->cicilan);
+            for ($i=0; $i < sizeof($cicilan); $i++) { 
+                # code...
+                $total_kredit = $total_kredit+$cicilan[$i];
+            }
+            $item->cicilan = unserialize($item->cicilan);
+            for ($i=0; $i < $item->total_angsuran; $i++) { 
+                # code...
+                $a = $a+$cicilan[$i];
+            }
+            $item->pendapatan = ($item->harga/$item->lama_cicilan)+$a;
+            $item->total_kredit = $total_kredit+$item->harga;
+            $total = $total +  $item->total_kredit;
+        }
+        // return $kredit;
+        return view('laporan.piutang',compact('kredit','total','status'));
     }
     public function index(){
         return view('laporan.pembayaran');

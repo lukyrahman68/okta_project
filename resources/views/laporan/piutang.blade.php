@@ -46,16 +46,56 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          @if ($status == 'lanjut')
           <div class="box">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">Bar Chart</h3>
+              <h3 class="box-title">Laporan Piutang</h3>
             </div>
             <div class="box-body">
-              <div id="bar-chart" style="height: 300px;"></div>
+              {{-- <div id="bar-chart" style="height: 300px;"></div> --}}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Nama Pelanggan</td>
+                    <td>No Kontrak</td>
+                    <td>Nama Barang</td>
+                    <td>Harga Barang</td>
+                    <td>Total Angsuran</td>
+                    <td>Jumlah Angsuran</td>
+                    <td>Suku Bunga</td>
+                    <td>Tanggal Bayar</td>
+                    <td>Total Telah Dibayar</td>
+                    <td>Sisa Harus Dibayar</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($kredit as $item)
+                      <tr>
+                        <td>{{$item->nama}}</td>
+                        <td>{{$item->no_kontrak}}</td>
+                        <td>{{$item->nama_barang}}</td>
+                        <td>{{$item->harga}}</td>
+                        <td>{{$item->total_angsuran}}</td>
+                        <td>{{$item->lama_cicilan}}</td>
+                        <td>{{$item->suku_bunga=='0'?'Flat':'Efektif'}}</td>
+                        <td>{{$item->tgl}}</td>
+                        <td>{{$item->pendapatan}}</td>
+                        <td>{{$item->total_kredit-$item->pendapatan}}</td>
+                      </tr>
+                  @endforeach
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="9" style="text-align: center">Total</td>
+                    <td>{{$total}}</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
             <!-- /.box-body-->
           </div>
+          @endif
         </div>
     </div>
 </div>

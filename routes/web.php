@@ -131,7 +131,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');
     Route::get('laporan/pendapatan','PembayaranController@pendapatan')->name('laporan.pendapatan');
     Route::get('laporan/piutang','PembayaranController@piutang')->name('laporan.piutang');
-
+    Route::post('proseslaporan/pendapatan','PembayaranController@pendapatan2')->name('proseslaporan.pendapatan');
+    Route::post('proseslaporan/piutang','PembayaranController@piutang2')->name('proseslaporan.piutang');
     //profile
     Route::resource('profile', 'ProfileController');
     

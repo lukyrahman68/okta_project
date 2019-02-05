@@ -36,14 +36,8 @@
                         <input type="submit" value="Filter" class="btn btn-primary">
                     </div>
                 </div><br><br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <td>asd</td>
-                            <td>asdasd</td>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="box-body">
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

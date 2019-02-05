@@ -18,8 +18,8 @@ class PembayaranController extends Controller
         return view('laporan.pendapatan');
     }
     public function pendapatan2(request $request){
-        //$a=date("Y-m-d",$request->awal);
-        //$b=date($request->akhir);
+        $a=$request->awal;
+        $b=$request->akhir;
         $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
                 ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
                 ->get();

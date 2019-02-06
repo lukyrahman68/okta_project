@@ -56,7 +56,7 @@ class KreditController extends Controller
         }
         $pelanggan = Pelanggan::find($request->pelanggan_id);
         $pelanggan->update(['sts'=>'1']);
-        return redirect()->route('kredit.index');
+        return redirect()->route('kredit.index')->with('alert','Berhasil ditambah');
     }
     public function status(){
         $diterimas = Kredit::where('kredits.sts',3)

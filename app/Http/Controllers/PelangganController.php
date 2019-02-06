@@ -62,7 +62,7 @@ class PelangganController extends Controller
         }
 
 
-        return redirect()->route('pelanggan.index');
+        return redirect()->route('pelanggan.index')->with('alert','Berhasil ditambah');
     }
     public function update(request $request, $id){
         $input = $request->all();

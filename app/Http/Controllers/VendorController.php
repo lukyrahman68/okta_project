@@ -16,7 +16,7 @@ class VendorController extends Controller
     }
     public function store(request $request){
         Vendor::create($request->all());
-        return redirect()->route('vendor.index');
+        return redirect()->route('vendor.index')->with('alert','Berhasil ditambah');
     }
     public function edit($id){
         $vendor=vendor::findOrFail($id);

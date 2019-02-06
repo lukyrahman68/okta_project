@@ -13,6 +13,11 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
+            @if(\Session::has('alert'))
+                <div class="alert alert-success">
+                    <div>{{Session::get('alert')}}</div>
+                </div>
+            @endif
               <table class="table table-hover" id="myTable">
                 <thead>
                     <tr>

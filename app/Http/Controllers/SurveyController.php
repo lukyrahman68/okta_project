@@ -28,7 +28,7 @@ class SurveyController extends Controller
         }else{
             Session::flash('add_e','Data Gagal Ditambahkan');
         }
-        return redirect('/survey');
+        return redirect('/survey')->with('alert','Berhasil ditambah');
 
     }
     public function update(request $request, $id){
@@ -38,7 +38,7 @@ class SurveyController extends Controller
         }else{
             Session::flash('edit_e','Data Gagal Diubah');
         }
-        return redirect('/survey');
+        return redirect('/survey')->with('alert','Berhasil diubah');
 
     }
     public function destroy($id){

@@ -72,14 +72,9 @@ Route::get('/tambahkaryawan', function () {
     return view('pemilik.register');
 })->name('karyawan.tambah');
 Route::get('/tambahkaryawana', function () {
-    $kredits = App\Kredit::where('kredits.sts',0)
-                                    ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
-                                    ->join('barangs','kredits.barang_id','=','barangs.id')
-                                    ->join('vendors','vendors.id','=','barangs.vendor_id')
-                                    ->selectRaw('pelanggans.*,kredits.id as kredit_id, vendors.nama as vendor_nama, barangs.harga,barangs.nama as nama_brng')
-                                    ->get();
-            return view('pemilik.index',compact('kredits'));
-})->name('karyawan.tambah');
+    $a=1;
+    return view('pemilik.register',compact('a'));
+})->name('karyawan.tambaha');
 Route::get('/simulasi', function () {
     return view('karyawan.pelanggan.simulasi');
 })->name('simulasi');

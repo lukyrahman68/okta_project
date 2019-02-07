@@ -19,7 +19,7 @@ class BarangController extends Controller
     }
     public function store(request $request){
         Barang::create($request->all());
-        return redirect()->route('barang.index');
+        return redirect()->route('barang.index')->with('alert','Berhasil ditambah');
     }
     public function edit($id){
         $barang = Barang::findOrFail($id);

@@ -10,6 +10,11 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Apakah Anda Yakin?</h4>
             </div>
+            @if(\Session::has('alert'))
+                <div class="alert alert-success">
+                    <div>{{Session::get('alert')}}</div>
+                </div>
+            @endif
             <form action="{{route('survey.store')}}" method="post">
             @csrf
             <div class="modal-body">

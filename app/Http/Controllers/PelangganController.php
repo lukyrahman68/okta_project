@@ -80,7 +80,7 @@ class PelangganController extends Controller
         }
 
         $pelanggan->update($input);
-        return redirect()->route('pelanggan.index');
+        return redirect()->route('pelanggan.index')->with('alert','Berhasil diubah');
     }
     public function edit(request $request,$id){
         $pelanggan = Pelanggan::findOrfail($id); 

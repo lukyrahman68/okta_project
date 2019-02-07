@@ -38,7 +38,7 @@ class ApproveController extends Controller
         $pelanggan->sts = 3;
         $kredit->save();
         $pelanggan->save();
-        return redirect()->route('approve.index');
+        return redirect()->route('approve.index')->with('alert','Berhasil diubah');
         // return $kredit;
     }
     public function destroy($id){

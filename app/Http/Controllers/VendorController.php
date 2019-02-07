@@ -25,7 +25,7 @@ class VendorController extends Controller
     public function update(request $request,$id){
         $vendor=vendor::findOrFail($id);
         $vendor->update($request->all());
-        return redirect()->route('vendor.index');
+        return redirect()->route('vendor.index')->with('alert','Berhasil diubah');
     }
     public function destroy($id){
         $vendor = Vendor::findOrFail($id);

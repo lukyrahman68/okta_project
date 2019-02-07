@@ -29,7 +29,7 @@ class BarangController extends Controller
     public function update(request $request, $id){
         $barang = Barang::findOrFail($id);
         $barang->update($request->all());
-        return redirect()->route('barang.index');
+        return redirect()->route('barang.index')->with('alert','Berhasil diubah');
     }
     public function destroy($id){
         $barang = Barang::findOrFail($id);

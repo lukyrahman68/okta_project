@@ -81,7 +81,7 @@
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+             <li class="user-header">
                 <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="img-circle" alt="User Image">
 
                 <p>

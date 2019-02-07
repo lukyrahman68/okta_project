@@ -5,7 +5,7 @@
 <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title" style="font-weight: bold">Responsive Hover Table</h3>
+        <h3 class="box-title" style="font-weight: bold">Tambah Data Customer</h3><br>
         <form action="{{route('pelanggan.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">

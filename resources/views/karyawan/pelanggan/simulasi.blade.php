@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Proses Pengajuan Kredit</h3>
-            </div>
+            <!--<div class="box-header">
+              <h3 class="box-title">Proses Peng</h3>
+            </div>-->
             <!-- /.box-header -->
             <div class="container">
                 <h3>Simulasi Kredit</h3>

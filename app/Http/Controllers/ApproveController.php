@@ -92,14 +92,16 @@ class ApproveController extends Controller
         $pembayaran = Pembayaran::find($id);
         $pelanggan = Pelanggan::find($pembayaran->pelanggan_id);
         $kredit = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
                         ->where('kredits.pelanggan_id','=',$pelanggan->id)
                         ->where('kredits.sts','=','4')
-                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan')
+                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
                         ->first();
         $cicilan = unserialize($kredit->cicilan);
-        $total = $cicilan[$pembayaran->angsuran_ke-1];
+        $harga = $kredit->harga/$kredit->lama_cicilan;
+        $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;
         $pembayaran->status = '1';
-        $pembayaran->save();
+        // $pembayaran->save();
         $msg = 'Kami telah menerima pembayaran cicilan sebesar Rp.'.$total.' untuk nomer kontrak '.$kredit->no_kontrak;
         $number=$pelanggan->tlpn;
         $deviceid = '109133';
@@ -123,7 +125,7 @@ class ApproveController extends Controller
         $err = curl_error($curl);
 
         curl_close($curl);
-        return redirect()->route('pembayaran.index');
+        // return redirect()->route('pembayaran.index');
     }
     public function pembayaran_tolak($id){
         //status 2 ditolak

@@ -1,7 +1,15 @@
 @extends('layouts.back_end_pemilik')
 @section('main')
 <br>
-
+<style>
+#fixedbutton {
+    position: fixed;
+    bottom: 80px;
+    right: 50px; 
+    border-radius: 27px;
+    padding: 20px;
+}
+</style>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -22,7 +30,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right datepicker" name="awal" required>
+                            <input type="text" class="form-control pull-right datepicker" name="awal" value="{{@$a}}" required>
                         </div>
                     </div>
                     <div class="col-md-1" style="text-align: center">SD</div>
@@ -31,7 +39,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right datepicker" name="akhir" required>
+                            <input type="text" class="form-control pull-right datepicker" name="akhir" value="{{@$b}}" required>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -100,6 +108,7 @@
          
         </div>
     </div>
+    <a target="_blank" href="{{route('piutang.cetak', [date('Y-m-d', strtotime(@$a)), date('Y-m-d', strtotime(@$b))])}}" class="btn btn-primary" id="fixedbutton"><i class="fa fa-print fa-2x"></i></a>
 </div>
 @endsection
 @section('js')

@@ -50,7 +50,7 @@
           <div class="box">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">Laporan Keuntungan</h3>
+              <h3 class="box-title">Laporan Pendapatan</h3>
               {{-- @isset($kredit)
                 @foreach($kredit as $kredit)
                 {{unserialize($kredit->cicilan)}}

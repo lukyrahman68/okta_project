@@ -8,6 +8,10 @@ use App\Pelanggan;
 use App\Survey;
 use App\Pembayaran;
 use Response;
+use SMSGateway;
+use SMSGatewayMe\Client\ApiClient;
+use SMSGatewayMe\Client\Configuration;
+use SMSGatewayMe\Client\Api\DeviceApi;
 
 class ApproveController extends Controller
 {
@@ -86,8 +90,39 @@ class ApproveController extends Controller
     public function pembayaran_approve($id){
         //status 1 diterima
         $pembayaran = Pembayaran::find($id);
+        $pelanggan = Pelanggan::find($pembayaran->pelanggan_id);
+        $kredit = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->where('kredits.pelanggan_id','=',$pelanggan->id)
+                        ->where('kredits.sts','=','4')
+                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan')
+                        ->first();
+        $cicilan = unserialize($kredit->cicilan);
+        $total = $cicilan[$pembayaran->angsuran_ke-1];
         $pembayaran->status = '1';
         $pembayaran->save();
+        $msg = 'Kami telah menerima pembayaran cicilan sebesar Rp.'.$total.' untuk nomer kontrak '.$kredit->no_kontrak;
+        $number=$pelanggan->tlpn;
+        $deviceid = '109133';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://smsgateway.me/api/v4/message/send",
+          CURLOPT_SSL_VERIFYPEER=>false,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "[{\"phone_number\": \"$number\", \"message\": \"$msg\", \"device_id\": $deviceid}]",
+          CURLOPT_HTTPHEADER => array(
+            "Cache-Control: no-cache",
+            "Postman-Token: 0dfb5acc-f0ae-415b-a5d3-ca12a2dfdfd3",
+            "authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTU0OTE5NTQ2NCwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjY3Njg2LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.inoC3TujoLUGMHMuqo_zwEhNDm38i-5m_DGoXA4tB_A"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
         return redirect()->route('pembayaran.index');
     }
     public function pembayaran_tolak($id){

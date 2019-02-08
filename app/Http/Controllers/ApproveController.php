@@ -101,7 +101,7 @@ class ApproveController extends Controller
         $harga = $kredit->harga/$kredit->lama_cicilan;
         $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;
         $pembayaran->status = '1';
-        // $pembayaran->save();
+        $pembayaran->save();
         $msg = 'Kami telah menerima pembayaran cicilan sebesar Rp.'.$total.' untuk nomer kontrak '.$kredit->no_kontrak;
         $number=$pelanggan->tlpn;
         $deviceid = '109133';
@@ -125,7 +125,7 @@ class ApproveController extends Controller
         $err = curl_error($curl);
 
         curl_close($curl);
-        // return redirect()->route('pembayaran.index');
+        return redirect()->route('pembayaran.index');
     }
     public function pembayaran_tolak($id){
         //status 2 ditolak

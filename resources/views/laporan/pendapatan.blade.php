@@ -15,7 +15,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Laporan Pembayaran</h3>
+              <h3 class="box-title">Laporan Pendapatan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -108,7 +108,7 @@
          
         </div>
     </div>
-    <a target="_blank" href="{{route('piutang.cetak', [date('Y-m-d', strtotime(@$a)), date('Y-m-d', strtotime(@$b))])}}" class="btn btn-primary" id="fixedbutton"><i class="fa fa-print fa-2x"></i></a>
+    <a target="_blank" href="{{route('pendapatan.cetak', [date('Y-m-d', strtotime(@$a)), date('Y-m-d', strtotime(@$b))])}}" class="btn btn-primary" id="fixedbutton"><i class="fa fa-print fa-2x"></i></a>
 </div>
 @endsection
 @section('js')

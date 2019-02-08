@@ -131,12 +131,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('laporan/pembayaran','PembayaranController@pembayaran')->name('laporan.pembayaran');
     Route::get('laporan/pendapatan','PembayaranController@pendapatan')->name('laporan.pendapatan');
     Route::get('laporan/piutang','PembayaranController@piutang')->name('laporan.piutang');
+    Route::post('proseslaporan/pembayaran','PembayaranController@pembayaran2')->name('proseslaporan.pembayaran');
     Route::post('proseslaporan/pendapatan','PembayaranController@pendapatan2')->name('proseslaporan.pendapatan');
     Route::get('proseslaporan/cetak/{a}/{b}','PembayaranController@cetak')->name('pendapatan.cetak');
+    Route::get('proseslaporan/cetak_pembayaran/{a}/{b}','PembayaranController@cetak_pembayaran')->name('pembayaran.cetak');
     Route::get('piutang/cetak_piutang/{a}/{b}','PembayaranController@cetak_piutang')->name('piutang.cetak');
     Route::post('proseslaporan/piutang','PembayaranController@piutang2')->name('proseslaporan.piutang');
     //profile
     Route::resource('profile', 'ProfileController');
+
+    //notif
+    Route::get('notif','NotifController@index')->name('notif.index');
+    Route::post('notif/cari','NotifController@cari')->name('notif.cari');
+    Route::post('notif/kirim','NotifController@kirim')->name('notif.kirim');
     
 });
 Auth::routes();

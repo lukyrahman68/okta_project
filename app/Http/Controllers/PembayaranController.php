@@ -10,8 +10,33 @@ class PembayaranController extends Controller
 {
     //
     public function pembayaran(){
-        
-        return view('laporan.pembayaran');
+        $status = 'awal';
+        return view('laporan.pembayaran', compact('status'));
+    }
+    public function pembayaran2(request $request){
+        $status = 'lanjut';
+        $total = 0;
+        $a = $request->awal;
+        $b = $request->akhir;
+        $tgl_awal=date('Y-m-d', strtotime($request->awal));
+        $tgl_akhir=date('Y-m-d', strtotime($request->akhir));
+        $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
+                ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
+                ->join('barangs','barangs.id','kredits.barang_id')
+                ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+                ->whereBetween('pembayarans.created_at', array($tgl_awal,$tgl_akhir))
+                ->selectRaw('pelanggans.nama as nama_pelanggan, kredits.no_kontrak, barangs.nama as nama_barang,barangs.harga as harga,pembayarans.angsuran_ke, kredit_details.suku_bunga, kredit_details.cicilan, pembayarans.created_at as tgl, kredit_details.lama_cicilan')
+                ->get();
+
+        foreach ($kredit as $item) {
+            # code...
+            $cicilan = unserialize($item->cicilan);
+            $item->cicilan = unserialize($item->cicilan);
+            $item->pendapatan = ($item->harga/$item->lama_cicilan)+$cicilan[$item->angsuran_ke-1];
+            $item->coba = $cicilan[$item->angsuran_ke-1];
+            $total = $total + $item->pendapatan;
+        }
+        return view('laporan.pembayaran',compact('kredit','status','total','a','b'));
     }
     public function piutang(){
         $status = 'awal';
@@ -198,5 +223,30 @@ class PembayaranController extends Controller
         $pdf = PDF::loadView('laporan.pdf.piutang', compact('kredit','total','tgl_awal_show','tgl_akhir_show'));
         $pdf->setPaper('a4', 'landscape');
         return $pdf->download('piutang.pdf');
+    }
+    public function cetak_pembayaran($a, $b){
+        $total = 0;
+        $tgl_awal=date('Y-m-d', strtotime($a));
+        $tgl_akhir=date('Y-m-d', strtotime($b));
+        $tgl_awal_show=date('d-m-Y', strtotime($a));
+        $tgl_akhir_show=date('d-m-Y', strtotime($b));
+        $kredit = kredit::join('kredit_details','kredits.id','=','kredit_details.kredit_id')
+                ->join('pembayarans','kredits.pelanggan_id','=','pembayarans.pelanggan_id')
+                ->join('barangs','barangs.id','kredits.barang_id')
+                ->join('pelanggans','pelanggans.id','pembayarans.pelanggan_id')
+                ->whereBetween('pembayarans.created_at', array($tgl_awal,$tgl_akhir))
+                ->selectRaw('pelanggans.nama as nama_pelanggan, kredits.no_kontrak, barangs.nama as nama_barang,barangs.harga as harga,pembayarans.angsuran_ke, kredit_details.suku_bunga, kredit_details.cicilan, pembayarans.created_at as tgl, kredit_details.lama_cicilan')
+                ->get();
+        foreach ($kredit as $item) {
+            # code...
+            $cicilan = unserialize($item->cicilan);
+            $item->cicilan = unserialize($item->cicilan);
+            $item->pendapatan = ($item->harga/$item->lama_cicilan)+$cicilan[$item->angsuran_ke-1];
+            $item->coba = $cicilan[$item->angsuran_ke-1];
+            $total = $total + $item->pendapatan;
+        }
+        // return $kredit;
+        $pdf = PDF::loadView('laporan.pdf.pembayaran', compact('kredit','total','tgl_awal_show','tgl_akhir_show'));
+        return $pdf->download('pembayaran.pdf');
     }
 }

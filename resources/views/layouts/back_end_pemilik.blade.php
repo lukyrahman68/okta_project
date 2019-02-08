@@ -234,6 +234,14 @@
           </span>
         </a>
       </li>
+      <li>
+        <a href="{{route('notif.index')}}">
+          <i class="fa fa-th"></i> <span> Notif</span>
+          <span class="pull-right-container">
+            <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
+      </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
@@ -636,6 +644,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready( function () {
+      @yield('js')
         //Date picker
         $('.datepicker').datepicker({
               autoclose: true
@@ -697,6 +706,6 @@
             } 
     });
 </script>
-@yield('js')
+
 </body>
 </html>

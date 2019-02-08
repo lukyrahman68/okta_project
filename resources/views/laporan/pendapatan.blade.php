@@ -70,33 +70,34 @@
                 <table class="table">
                   <thead>
                     <tr>
+                        <td>No Kontrak</td>
                       <td>Nama Pelanggan</td>
-                      <td>No Kontrak</td>
-                      <td>Nama Barang</td>
+                      {{-- <td>Nama Barang</td>
                       <td>Harga Barang</td>
                       <td>Angsuran Ke</td>
                       <td>Suku Bunga</td>
-                      <td>Tanggal Bayar</td>
+                      <td>Tanggal Bayar</td> --}}
                       <td>Total</td>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($kredit as $item)
                         <tr>
-                          <td>{{$item->nama_pelanggan}}</td>
+                          
                           <td>{{$item->no_kontrak}}</td>
-                          <td>{{$item->nama_barang}}</td>
+                          <td>{{$item->nama_pelanggan}}</td>
+                          {{-- <td>{{$item->nama_barang}}</td>
                           <td>{{$item->harga}}</td>
                           <td>{{$item->angsuran_ke}}</td>
                           <td>{{$item->suku_bunga=='0'?'Flat':'Efektif'}}</td>
-                          <td>{{$item->tgl}}</td>
+                          <td>{{$item->tgl}}</td> --}}
                           <td>{{$item->pendapatan}}</td>
                         </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="7" style="text-align: center">Total</td>
+                      <td colspan="2" style="text-align: center">Total</td>
                       <td>{{$total}}</td>
                     </tr>
                   </tfoot>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>UD WAWA COLECTION | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   {{-- data table --}}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -48,7 +48,7 @@
 #myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
-.modal {
+.modal_img {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -63,7 +63,7 @@
 }
 
 /* Modal Content (Image) */
-.modal-content {
+.modal-content_img {
   margin: auto;
   display: block;
   width: 80%;
@@ -72,7 +72,7 @@
 }
 
 /* Caption of Modal Image (Image Text) - Same Width as the Image */
-#caption {
+#caption_img {
   margin: auto;
   display: block;
   width: 80%;
@@ -84,7 +84,7 @@
 }
 
 /* Add Animation - Zoom in the Modal */
-.modal-content, #caption {
+.modal-content_img, #caption_img {
   animation-name: zoom;
   animation-duration: 0.6s;
 }
@@ -95,7 +95,7 @@
 }
 
 /* The Close Button */
-.close {
+.close_img {
   position: absolute;
   top: 55px;
   right: 185px;
@@ -106,8 +106,8 @@
   transition: 0.3s;
 }
 
-.close:hover,
-.close:focus {
+.close_img:hover,
+.close_img:focus {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
@@ -115,7 +115,7 @@
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
-  .modal-content {
+  .modal-content_img {
     width: 100%;
   }
 }
@@ -131,9 +131,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>W</b>W</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>WAWA</b>COLECTION</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -147,41 +147,31 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+             <li class="user-header">
+                <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{Auth::user()->name}}
                 </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{route('profile.index')}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat"  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
                 </div>
               </li>
             </ul>
@@ -198,7 +188,7 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
@@ -219,7 +209,7 @@
         </a>
       </li>
       <li>
-        <a href="{{route('karyawan.tambah')}}">
+        <a href="{{route('karyawan.index')}}">
           <i class="fa fa-th"></i> <span> Tambah Karyawan</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
@@ -256,7 +246,7 @@
           <li><a href="{{route('laporan.pendapatan')}}"><i class="fa fa-circle-o"></i> Pendapatan</a></li>
         </ul>
       </li>
-      
+
       {{-- <li class="treeview">
         <a href="#">
           <i class="fa fa-laptop"></i>
@@ -391,7 +381,7 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
-        
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
@@ -588,16 +578,16 @@
 </div>
 <!-- ./wrapper -->
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal" class="modal_img">
 
     <!-- The Close Button -->
-    <span class="close">&times;</span>
-  
+    <span class="close_img">&times;</span>
+
     <!-- Modal Content (The Image) -->
-    <img class="modal-content img_modal" id="img01">
-  
+    <img class="modal-content_img img_modal" id="img01">
+
     <!-- Modal Caption (Image Text) -->
-    <div id="caption"></div>
+    <div id="caption_img"></div>
   </div>
 <!-- jQuery 3 -->
 <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
@@ -698,12 +688,11 @@
             // }
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-
+            var span = document.getElementsByClassName("close_img")[0];
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
               modal.style.display = "none";
-            } 
+            }
     });
 </script>
 

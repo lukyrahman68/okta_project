@@ -130,8 +130,41 @@ class ApproveController extends Controller
     public function pembayaran_tolak($id){
         //status 2 ditolak
         $pembayaran = Pembayaran::find($id);
+        $pelanggan = Pelanggan::find($pembayaran->pelanggan_id);
         $pembayaran->status = '2';
         $pembayaran->save();
+        $kredit = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
+                        ->where('kredits.pelanggan_id','=',$pelanggan->id)
+                        ->where('kredits.sts','=','4')
+                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
+                        ->first();
+        $cicilan = unserialize($kredit->cicilan);
+        $harga = $kredit->harga/$kredit->lama_cicilan;
+        $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;
+        $msg = 'Kami menolak pembayaran nomer kontrak '.$kredit->no_kontrak;
+        $number=$pelanggan->tlpn;
+        $deviceid = '109133';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://smsgateway.me/api/v4/message/send",
+          CURLOPT_SSL_VERIFYPEER=>false,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "[{\"phone_number\": \"$number\", \"message\": \"$msg\", \"device_id\": $deviceid}]",
+          CURLOPT_HTTPHEADER => array(
+            "Cache-Control: no-cache",
+            "Postman-Token: 0dfb5acc-f0ae-415b-a5d3-ca12a2dfdfd3",
+            "authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTU0OTE5NTQ2NCwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjY3Njg2LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.inoC3TujoLUGMHMuqo_zwEhNDm38i-5m_DGoXA4tB_A"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
         return redirect()->route('pembayaran.index');
     }
 }

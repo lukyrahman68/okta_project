@@ -27,7 +27,7 @@ Route::get('halpelanggan', function () {
                                     ->join('pelanggans','kredits.pelanggan_id','=','pelanggans.id')
                                     ->get();
         $bayar = App\Pembayaran::where('pelanggan_id','=',session('id'))
-                                    ->where('status','=','1')                            
+                                    ->where('status','=','1')
                                     ->get();
         $status=0;
         $hitung=0;
@@ -60,10 +60,28 @@ Route::get('informasikredit', function () {
                             ->join('kredit_details','kredit_details.kredit_id','=','kredits.id')
                             ->selectraw('*, barangs.nama a')
                             ->get();
-        return view('pelanggan.informasi',compact('kredit'));
+        $kredit_info = App\Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
+                        ->where('kredits.pelanggan_id','=',session('id'))
+                        ->where('kredits.sts','=','4')
+                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
+                        ->first();
+        $cicilan = unserialize($kredit_info->cicilan);
+        $total_angsuran =[];
+        // $sisa_pinjaman = $kredit_info->harga;
+        $sisa_pinjaman = [];
+        $a = $kredit_info->harga;
+        $angsuran_pokok = floor($kredit_info->harga/$kredit_info->lama_cicilan);
+        for ($i=0; $i <sizeof($cicilan) ; $i++) {
+            # code...
+            $total_angsuran[$i] = $angsuran_pokok + $cicilan[$i];
+            $a = $a-$angsuran_pokok;
+            array_push($sisa_pinjaman, $a);
+        }
+        return view('pelanggan.informasi',compact('kredit','cicilan','angsuran_pokok','total_angsuran','sisa_pinjaman','kredit_info'));
     }
     return redirect()->route('b');
-    
+
 })->name('informasikredit');
 Route::get('/tes2', function () {
     return view('pemilik.index');
@@ -144,8 +162,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('notif','NotifController@index')->name('notif.index');
     Route::post('notif/cari','NotifController@cari')->name('notif.cari');
     Route::post('notif/kirim','NotifController@kirim')->name('notif.kirim');
-    
+
+
+
 });
+//karyawan
+Route::resource('karyawan', 'KaryawanController');
 Auth::routes();
 Route::get('tes', function () {
     $data = App\Pelanggan::all();

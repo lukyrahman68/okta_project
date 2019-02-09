@@ -118,7 +118,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
@@ -692,7 +692,7 @@
                 var tot_ang_baru = 0;
                 var harga_baru=harga;
                 if(bunga=='0'){
-                    
+
                     var cipok = parseInt(harga)/parseInt(cicilan);
                     var bu_hit = Math.ceil(parseInt(harga)*0.25/12);
                     var angsuran = parseInt(cipok)+parseInt(bu_hit);

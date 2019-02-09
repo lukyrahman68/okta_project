@@ -32,6 +32,13 @@
                     @endif
             </div>
             <div class="form-group">
+                <label for="status">Status</label>
+                <select name="is_owner" id="is_owner" class="form-control">
+                    <option value="0">Kasir</option>
+                    <option value="1">Owner</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="password">{{ __('Password') }}</label>
                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                 @if ($errors->has('password'))

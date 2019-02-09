@@ -9,7 +9,7 @@
               <h3 class="box-title">Informasi Kredit</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive">
+            <div class="box-body table-responsive" style="padding:2em;">
             @foreach($kredit as $kredit)
               <div class="form-group">
                 <label>No Kontrak : </label>{{$kredit->no_kontrak}}
@@ -30,7 +30,29 @@
                 <label>Suku Bunga : </label> {{($kredit->suku_bunga=='0')?'Flat':'Efective'}}
               </div>
             @endforeach
-            </div>
+            <table class="table">
+                <thead>
+                    <th>Bulan</th>
+                    <th>Angsuran Bunga</th>
+                    <th>Angsuran Pokok</th>
+                    <th>Total Angsuran</th>
+                    <th>Sisa Pinjaman</th>
+                </thead>
+                <tbody>
+                    <?php $idx=0 ?>
+                    @for ($idx = 0; $idx < sizeof($cicilan); $idx++)
+                        <tr>
+                            <td>{{$idx+1}}</td>
+                            <td>{{$cicilan[$idx]}}</td>
+                            <td>{{$angsuran_pokok}}</td>
+                            <td>{{$total_angsuran[$idx]}}</td>
+                            <td>{{$sisa_pinjaman[$idx]}}</td>
+                        </tr>
+                    @endfor
+                </tbody>
+            </table>
+
+        </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

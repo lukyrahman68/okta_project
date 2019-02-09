@@ -35,10 +35,10 @@
                       <td><img src="{{asset('selfi/'.$pembayaran->pelanggan_id.'/'.$pembayaran->pelanggan_id.'-'.$pembayaran->angsuran_ke.'.jpeg')}}" alt="" class="img img-thumbnail" style="height: 100px;width: 100px;"></td>
                       <td>
                         <a href="{{route('pembayaran.approve', $pembayaran->id)}}" id="btn_detail" class="btn btn-sm btn-primary" ">Terima</a>
-                        <a href="#" id="btn_detail" class="btn btn-sm btn-danger" ">Tolak</a>
+                        <a href="{{route('pembayaran.tolak', $pembayaran->id)}}" id="btn_detail" class="btn btn-sm btn-danger" ">Tolak</a>
 
                       </td>
-                  </tr> 
+                  </tr>
                   @endforeach
                 </tbody>
               </table>

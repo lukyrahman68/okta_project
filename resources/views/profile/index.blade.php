@@ -1,4 +1,4 @@
-@extends('layouts.back_end')
+@extends(Auth::user()->is_owner=='0'?'layouts.back_end':'layouts.back_end_pemilik')
 @section('main')
 <br>
 <div class="container">

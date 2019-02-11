@@ -5,7 +5,7 @@
 <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title" style="font-weight: bold">Responsive Hover Table</h3>
+        <h3 class="box-title" style="font-weight: bold">Edit User</h3>
         <form method="POST" action="{{ route('karyawan.update', $user->id) }}">
             @csrf
             @method('PUT')

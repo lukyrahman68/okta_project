@@ -210,7 +210,7 @@
       </li>
       <li>
         <a href="{{route('karyawan.index')}}">
-          <i class="fa fa-th"></i> <span> Tambah Karyawan</span>
+          <i class="fa fa-th"></i> <span> Tambah User</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
@@ -224,14 +224,14 @@
           </span>
         </a>
       </li>
-      <li>
+      <!--<li>
         <a href="{{route('notif.index')}}">
           <i class="fa fa-th"></i> <span> Notif</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
         </a>
-      </li>
+      </li>-->
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>

@@ -29,7 +29,7 @@ class NotifController extends Controller
         for ($i=0; $i < sizeof($input); $i++) { 
             # code...
             $pelanggan = Pelanggan::find($input[$i]);
-            $msg = 'Cepet Bayar Woy';
+            $msg = 'Pelanggan Yth pembayaran cicilan akan masuk jatuh tempo mohon untuk segera membayar angsuran melalui transfer dan segera upload pada website resmin UDWawaCollection.com Terima Kasih';
         $number=$pelanggan->tlpn;
         $deviceid = '109133';
         $curl = curl_init();

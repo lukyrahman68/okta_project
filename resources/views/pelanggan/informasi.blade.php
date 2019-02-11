@@ -29,6 +29,9 @@
               <div class="form-group">
                 <label>Suku Bunga : </label> {{($kredit->suku_bunga=='0')?'Flat':'Efective'}}
               </div>
+              <div class="form-group">
+                <label>Jatuh Tempo Pembayaran : </label>{{$kredit->jatuh_tempo}}
+              </div>
             @endforeach
             <table class="table">
                 <thead>

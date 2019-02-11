@@ -5,7 +5,7 @@
 <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title" style="font-weight: bold">Responsive Hover Table</h3>
+        <h3 class="box-title" style="font-weight: bold">Input User Baru</h3>
         @isset($a)
             <div class="alert alert-success">
                 <div>Berhasil menambah karyawan</div>

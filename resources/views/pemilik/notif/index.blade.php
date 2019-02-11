@@ -1,4 +1,4 @@
-@extends('layouts.back_end_pemilik')
+@extends('layouts.back_end')
 @section('main')
 <br>
 <div class="container">
@@ -6,7 +6,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Laporan Pembayaran</h3>
+              <h3 class="box-title">Notifikasi Jatuh Tempo</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">

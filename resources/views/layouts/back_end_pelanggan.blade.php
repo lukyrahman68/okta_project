@@ -58,7 +58,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{route('informasikredit')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>WA</b>WA</span>
       <!-- logo for regular state and mobile devices -->
@@ -81,7 +81,7 @@
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-             <!-- <li class="user-header">
+             <li class="user-header">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>

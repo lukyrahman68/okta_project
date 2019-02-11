@@ -6,7 +6,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Karyawan</h3>
+              <h3 class="box-title">Data User</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -26,7 +26,7 @@
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Status</th>
-                        <th>Gambar</th>
+                        <!--<th>Gambar</th>-->
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -36,7 +36,7 @@
                       <td>{{$user->name}}</td>
                       <td>{{$user->email}}</td>
                       <td>{{$user->is_owner=='1'?'Owner':'Kasir'}}</td>
-                      <td><img src="{{asset('images/users/'.$user->id.'/'.$user->img)}}" alt="" class="img-thumbnail img" id="img" height="100" width="100"></td>
+                      <!--<td><img src="{{asset('images/users/'.$user->id.'/'.$user->img)}}" alt="" class="img-thumbnail img" id="img" height="100" width="100"></td>-->
                       <td>
                         <a href="{{route('karyawan.edit',$user->id)}}" id="btn_detail" class="btn btn-sm btn-info" ">Edit</a>
                         <a href="#" data-toggle="modal" data-target="#danger_modal_{{$user->id}}" class="btn btn-sm btn-danger">Hapus</a>

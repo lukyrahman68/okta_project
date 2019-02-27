@@ -15,12 +15,20 @@
                                 @csrf
                                     <div class="col-md-3"style="text-align: right">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right datepicker" name="date" value="{{@$a}}" required>
+                                            <input type="date" class="form-control pull-right datepicker" name="date" value="{{@$a}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control pull-right datepicker" name="date2" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

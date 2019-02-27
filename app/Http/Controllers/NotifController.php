@@ -16,9 +16,11 @@ class NotifController extends Controller
     public function cari(request $request){
         $status = 'lanjut';
         $date = (int)date('d', strtotime($request->date));
+        $date2 = (int)date('d', strtotime($request->date2));
         $kredit = DetailKredit::join('kredits', 'kredit_details.kredit_id', 'kredits.id')
                                 ->join('pelanggans','pelanggans.id','kredits.pelanggan_id')
-                                ->whereRaw('DAY(kredit_details.jatuh_tempo)='.$date)
+                                ->whereRaw('DAY(kredit_details.jatuh_tempo)>='.$date)
+                                ->whereRaw('DAY(kredit_details.jatuh_tempo)<='.$date2)
                                 ->selectRaw('pelanggans.nama,pelanggans.id')
                                 ->get();
         return view('pemilik.notif.index', compact('status','kredit'));

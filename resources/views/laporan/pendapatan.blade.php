@@ -30,7 +30,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right datepicker" name="awal" value="{{@$a}}" required>
+                            <input type="date" class="form-control pull-right datepicker" name="awal" value="{{@$a}}" required>
                         </div>
                     </div>
                     <div class="col-md-1" style="text-align: center">SD</div>
@@ -39,7 +39,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right datepicker" name="akhir" value="{{@$b}}" required>
+                            <input type="date" class="form-control pull-right datepicker" name="akhir" value="{{@$b}}" required>
                         </div>
                     </div>
                     <div class="col-md-4">

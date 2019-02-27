@@ -76,8 +76,8 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <!--<img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
+              <span class="hidden-xs">{{session('nama')}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -152,7 +152,12 @@
           <i class="fa fa-th"></i> <span>Simulasi Kredit</span>
         </a>
       </li>
-      <li class="treeview">
+      <li>
+        <a href="{{route('uploadpembayaran')}}">
+          <i class="fa fa-th"></i> <span>Upload Struk Pembayaran</span>
+        </a>
+      </li>
+      <!--<li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
           <span>Pembayaran</span>
@@ -165,7 +170,7 @@
           <li><a href="{{route('jadwalpembayaran')}}"><i class="fa fa-circle-o"></i> Jadwal Pembayaran</a></li>
         </ul>
       </li>
-    </ul>
+    </ul>-->
     </section>
     <!-- /.sidebar -->
   </aside>

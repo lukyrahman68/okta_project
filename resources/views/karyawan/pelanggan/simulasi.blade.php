@@ -102,7 +102,7 @@
         $.each(table, function (i, row){
             console.debug(row);
             $.each(row, function (j, cell){
-                doc.cell(10, 50,120, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+                doc.cell(120, 50,120, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
             })
         })
 

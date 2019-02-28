@@ -646,6 +646,9 @@
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+
 @yield('script')
 <script>
         $(function () {
@@ -817,6 +820,7 @@
                 today = mm + '/' + dd + '/' + yyyy;
                 $('<h3 id="jatuh_tempo">Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));
                 $('#proses_simpan').css('display','block');
+                $('#cmd').css('display','block');
 
                 // console.log('harga = '+harga);
                 // console.log('cicilan = '+cicilan);

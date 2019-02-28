@@ -80,3 +80,8 @@
 </div>
 
 @endsection
+@section('script')
+    <script>
+    $('.table').DataTable();
+    </script>
+@endsection

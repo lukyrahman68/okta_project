@@ -71,7 +71,7 @@ class PembayaranController extends Controller
         }
         // return $kredit;
         return view('laporan.pendapatan',compact('kredit','status','total','a','b'));
-        
+
     }
     public function piutang2(request $request){
         // $a=date("Y-m-d", $request->get('awal'));
@@ -110,12 +110,12 @@ class PembayaranController extends Controller
             $total_kredit = 0;
 
             $cicilan = unserialize($item->cicilan);
-            for ($i=0; $i < sizeof($cicilan); $i++) { 
+            for ($i=0; $i < sizeof($cicilan); $i++) {
                 # code...
                 $total_kredit = $total_kredit+$cicilan[$i];
             }
             $item->cicilan = unserialize($item->cicilan);
-            for ($i=0; $i < $item->total_angsuran; $i++) { 
+            for ($i=0; $i < $item->total_angsuran; $i++) {
                 # code...
                 $a = $a+$cicilan[$i];
             }
@@ -131,12 +131,13 @@ class PembayaranController extends Controller
     }
     public function store(Request $request){
         $status=0;
-        $kredit = kredit::where('pelanggan_id','=',session('id'))->join('kredit_details','kredit_details.kredit_id','=','kredits.id')->get();
+        $kredit = kredit::where('pelanggan_id','=',session('id'))->join('kredit_details','kredit_details.kredit_id','=','kredits.id')->select('kredits.id')->first();
         $kredit2 = kredit::where('pelanggan_id','=',session('id'));
         $b = pembayaran::where('pelanggan_id','=',session('id'))->count();
         $b++;
         $a = new pembayaran();
         $a->pelanggan_id = session('id');
+        $a->kredit_id = $kredit->id;
         $a->angsuran_ke = $b;
         $a->status = 0;
         $a->save();
@@ -153,10 +154,10 @@ class PembayaranController extends Controller
             $status++;
         }
         if($status==2){
-            if($kredit[0]->lama_cicilan == $b){
-                $kredit2->update(['sts'=>'5']);
-            }
-            
+            // if($kredit[0]->lama_cicilan == $b){
+            //     $kredit2->update(['sts'=>'5']);
+            // }
+
             $image1->move(public_path('struk/'.$a->pelanggan_id),$img1);
             $image2->move(public_path('selfi/'.$a->pelanggan_id),$img2);
         }
@@ -207,12 +208,12 @@ class PembayaranController extends Controller
             $total_kredit = 0;
 
             $cicilan = unserialize($item->cicilan);
-            for ($i=0; $i < sizeof($cicilan); $i++) { 
+            for ($i=0; $i < sizeof($cicilan); $i++) {
                 # code...
                 $total_kredit = $total_kredit+$cicilan[$i];
             }
             $item->cicilan = unserialize($item->cicilan);
-            for ($i=0; $i < $item->total_angsuran; $i++) { 
+            for ($i=0; $i < $item->total_angsuran; $i++) {
                 # code...
                 $a = $a+$cicilan[$i];
             }

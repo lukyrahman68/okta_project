@@ -7,6 +7,7 @@ use App\Kredit;
 use App\Pelanggan;
 use App\Survey;
 use App\Pembayaran;
+use App\DetailKredit;
 use Response;
 use SMSGateway;
 use SMSGatewayMe\Client\ApiClient;
@@ -73,7 +74,32 @@ class ApproveController extends Controller
                             ->where('hasil_surveys.pelanggan_id','=',$kredit->id)
                             ->selectRaw('hasil_surveys.jawaban,surveys.pertanyaan')
                             ->get();
-        return view('pemilik.detail',compact('kredit','surveys'));
+
+        //pelanggan history
+        // $histories = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+        //                     ->join('vendors','vendors.id','kredits.vendor_id')
+        //                     ->join('barangs','barangs.id','kredits.barang_id')
+        //                     ->where('kredits.pelanggan_id',$kredit->id)
+        //                     ->selectRaw('kredits.no_kontrak,vendors.nama as nama_vendor,barangs.nama as nama_barang,kredit_details.suku_bunga,kredit_details.lama_cicilan')
+        //                     ->get();
+
+        $histories = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                            // ->join('vendors','vendors.id','kredits.vendor_id')
+                            ->join('barangs','barangs.id','kredits.barang_id')
+                            ->join('pembayarans','pembayarans.kredit_id','kredits.id')
+                            ->where('kredits.pelanggan_id',$kredit->id)
+                            ->selectRaw('kredits.no_kontrak,barangs.nama,barangs.harga,pembayarans.angsuran_ke,pembayarans.created_at,kredit_details.lama_cicilan,kredit_details.cicilan,kredit_details.jatuh_tempo')
+                            ->get();
+                            $idx=0;
+        foreach ($histories as $item) {
+            $d = substr($item->jatuh_tempo, strrpos($item->jatuh_tempo, '-') + 1);
+            $item->jatuh_tempo=$d;
+            if($item->angsuran_ke==$idx+1)
+                $cicilan = unserialize($item->cicilan);
+                $item->cicilan = $cicilan[$idx];
+            $idx++;
+        }
+        return view('pemilik.detail',compact('kredit','surveys','histories'));
         // return $kredits;
     }
     public function pembayaran_index(){
@@ -95,8 +121,16 @@ class ApproveController extends Controller
                         ->join('barangs','barangs.id','kredits.barang_id')
                         ->where('kredits.pelanggan_id','=',$pelanggan->id)
                         ->where('kredits.sts','=','4')
-                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
+                        ->selectRaw('kredits.id,kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
                         ->first();
+        if($pembayaran->angsuran_ke==$kredit->lama_cicilan){
+            $kredit_updt = Kredit::find($kredit->id);
+            $kredit_updt->sts='5';
+            $kredit_updt->save();
+            $pelanggan->sts = '0';
+            $pelanggan->save();
+
+        }
         $cicilan = unserialize($kredit->cicilan);
         $harga = $kredit->harga/$kredit->lama_cicilan;
         $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;

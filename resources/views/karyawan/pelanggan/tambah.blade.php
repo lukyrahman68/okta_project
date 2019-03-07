@@ -10,7 +10,7 @@
             @csrf
             <div class="form-group">
                 <label for="NIK">NIK</label>
-                <input type="text" class="form-control" placeholder="NIK" name="nik" required>
+                <input type="text" class="form-control" placeholder="NIK" name="nik" onkeypress="return isNumber(event)" required>
             </div>
             <div class="form-group">
                 <label for="Nama">Nama</label>
@@ -112,7 +112,7 @@
                   <!-- /.form group -->
             <div class="form-group">
                 <label for="Telphone">Telphone</label>
-                <input type="text" class="form-control" placeholder="Telphone" name="tlpn" required>
+                <input type="text" class="form-control" placeholder="Telphone" name="tlpn" onkeypress="return isNumber(event)" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -124,9 +124,9 @@
             </div>
             <div class="form-group">
                 <label for="email">No Tephone Keluarga</label>
-                <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga" required>
+                <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga" onkeypress="return isNumber(event)" required>
                 <label for="email">No Tephone Keluarga 2</label>
-                <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga2" required>
+                <input type="text" class="form-control" placeholder="No Telphone" name="tlpn_keluarga2" onkeypress="return isNumber(event)" required>
             </div>
             <div class="card" style="padding:1em;border:1px solid #eee">
                 <div class="card-body">

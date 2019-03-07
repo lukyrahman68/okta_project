@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="tlpn">Harga</label>
-                <input type="text" class="form-control" placeholder="Harga" name="harga">
+                <input type="text" class="form-control" placeholder="Harga" name="harga" onkeypress="return isNumber(event)">
             </div>
             <div class="pull-right">
                 <input type="submit" value="Simpan" class="btn btn-sm btn-primary">

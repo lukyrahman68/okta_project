@@ -29,6 +29,7 @@
                       {{-- <div id="add_media"></div> --}}
                 </div><br><br>
                 <hr><br><br>
+                <h2>History</h2>
                 <table class="table" style="padding: 10em;">
                     <thead>
                         <tr>
@@ -51,6 +52,31 @@
                         @endif
                     </tbody>
                 </table>
+                <br>
+                <table class="table" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Nama Barang</th>
+                            <th>Harga</th>
+                            <th>Total Cicilan</th>
+                            <th>Angsuran Ke-</th>
+                            <th>Jatuh Tempo Setiap Tanggal</th></th>
+                            <th>Tanggal Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($histories as $history)
+                            <tr>
+                                <td>{{$history->nama}}</td>
+                                <td>{{$history->harga}}</td>
+                                <td>{{$history->cicilan}}</td>
+                                <td>{{$history->angsuran_ke}}</td>
+                                <td>{{$history->jatuh_tempo}}</td>
+                                <td>{{$history->created_at}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table><br>
                     <form action="{{route('approve.update',$kredit->kredit_id)}}" method="POST" >
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}

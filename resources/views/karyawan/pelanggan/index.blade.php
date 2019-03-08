@@ -9,7 +9,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
+              <h3 class="box-title">Data Customer</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -79,4 +79,9 @@
     </div>
 </div>
 
+@endsection
+@section('script')
+    <script>
+    $('.table').DataTable();
+    </script>
 @endsection

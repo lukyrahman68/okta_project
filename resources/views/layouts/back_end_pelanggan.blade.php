@@ -58,7 +58,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{route('informasikredit')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>WA</b>WA</span>
       <!-- logo for regular state and mobile devices -->
@@ -76,19 +76,19 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <!--<img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">-->
+              <span class="hidden-xs">{{session('nama')}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+             <li class="user-header">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
-              </li>
+              </li>-->
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
@@ -133,7 +133,7 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
@@ -152,7 +152,12 @@
           <i class="fa fa-th"></i> <span>Simulasi Kredit</span>
         </a>
       </li>
-      <li class="treeview">
+      <li>
+        <a href="{{route('uploadpembayaran')}}">
+          <i class="fa fa-th"></i> <span>Upload Struk Pembayaran</span>
+        </a>
+      </li>
+      <!--<li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
           <span>Pembayaran</span>
@@ -165,7 +170,7 @@
           <li><a href="{{route('jadwalpembayaran')}}"><i class="fa fa-circle-o"></i> Jadwal Pembayaran</a></li>
         </ul>
       </li>
-    </ul>
+    </ul>-->
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -415,6 +420,7 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 {{-- ajax --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -545,8 +551,9 @@
                   //alert(harga);
                   $("#harga").text(harga);
                   //document.getElementById("harga").text("asd");
-                });    
+                });
             $('#kalkulasi').click(function (){
+                $('#cmd').css('display','block');
                 $('#simulasi_table tbody tr').remove();
                 $('#simulasi_table tfoot').remove();
                 $('#jatuh_tempo').remove();
@@ -570,7 +577,7 @@
                         var tot_ang = parseInt(cipok)+parseInt(bu_hit);
                         tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
                         harga_baru = harga_baru-cipok;
-                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
+                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.ceil(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(cipok).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(tot_ang).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(harga_baru).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
                         idx++;
                     }
                     $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
@@ -588,10 +595,10 @@
                         tot_ang_baru = parseInt(tot_ang_baru)+parseInt(tot_ang);
                         //alert(cipok);
                         harga_baru = harga_baru-cipok;
-                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.round(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+harga_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
+                        $('#simulasi_table tbody:last-child').append('<tr><td>'+(parseInt(idx)+1)+'</td><td>Rp. '+Math.ceil(bu_hit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(cipok).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(tot_ang).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.ceil(harga_baru).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
                         idx++;
                     }
-                    $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+bu_hit_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+cipok_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+tot_ang_baru.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
+                    $('#simulasi_table').append('<tfoot><tr><td>Total</td><td>Rp. '+Math.round(bu_hit_baru).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.round(cipok_baru).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td><td>Rp. '+Math.round(tot_ang_baru).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr></tfoot>');
                 }
                 today = mm + '/' + dd + '/' + yyyy;
                 $('<h3 id="jatuh_tempo">Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));

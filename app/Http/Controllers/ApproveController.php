@@ -7,6 +7,7 @@ use App\Kredit;
 use App\Pelanggan;
 use App\Survey;
 use App\Pembayaran;
+use App\DetailKredit;
 use Response;
 use SMSGateway;
 use SMSGatewayMe\Client\ApiClient;
@@ -73,7 +74,32 @@ class ApproveController extends Controller
                             ->where('hasil_surveys.pelanggan_id','=',$kredit->id)
                             ->selectRaw('hasil_surveys.jawaban,surveys.pertanyaan')
                             ->get();
-        return view('pemilik.detail',compact('kredit','surveys'));
+
+        //pelanggan history
+        // $histories = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+        //                     ->join('vendors','vendors.id','kredits.vendor_id')
+        //                     ->join('barangs','barangs.id','kredits.barang_id')
+        //                     ->where('kredits.pelanggan_id',$kredit->id)
+        //                     ->selectRaw('kredits.no_kontrak,vendors.nama as nama_vendor,barangs.nama as nama_barang,kredit_details.suku_bunga,kredit_details.lama_cicilan')
+        //                     ->get();
+
+        $histories = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                            // ->join('vendors','vendors.id','kredits.vendor_id')
+                            ->join('barangs','barangs.id','kredits.barang_id')
+                            ->join('pembayarans','pembayarans.kredit_id','kredits.id')
+                            ->where('kredits.pelanggan_id',$kredit->id)
+                            ->selectRaw('kredits.no_kontrak,barangs.nama,barangs.harga,pembayarans.angsuran_ke,pembayarans.created_at,kredit_details.lama_cicilan,kredit_details.cicilan,kredit_details.jatuh_tempo')
+                            ->get();
+                            $idx=0;
+        foreach ($histories as $item) {
+            $d = substr($item->jatuh_tempo, strrpos($item->jatuh_tempo, '-') + 1);
+            $item->jatuh_tempo=$d;
+            if($item->angsuran_ke==$idx+1)
+                $cicilan = unserialize($item->cicilan);
+                $item->cicilan = $cicilan[$idx];
+            $idx++;
+        }
+        return view('pemilik.detail',compact('kredit','surveys','histories'));
         // return $kredits;
     }
     public function pembayaran_index(){
@@ -92,12 +118,22 @@ class ApproveController extends Controller
         $pembayaran = Pembayaran::find($id);
         $pelanggan = Pelanggan::find($pembayaran->pelanggan_id);
         $kredit = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
                         ->where('kredits.pelanggan_id','=',$pelanggan->id)
                         ->where('kredits.sts','=','4')
-                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan')
+                        ->selectRaw('kredits.id,kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
                         ->first();
+        if($pembayaran->angsuran_ke==$kredit->lama_cicilan){
+            $kredit_updt = Kredit::find($kredit->id);
+            $kredit_updt->sts='5';
+            $kredit_updt->save();
+            $pelanggan->sts = '0';
+            $pelanggan->save();
+
+        }
         $cicilan = unserialize($kredit->cicilan);
-        $total = $cicilan[$pembayaran->angsuran_ke-1];
+        $harga = $kredit->harga/$kredit->lama_cicilan;
+        $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;
         $pembayaran->status = '1';
         $pembayaran->save();
         $msg = 'Kami telah menerima pembayaran cicilan sebesar Rp.'.$total.' untuk nomer kontrak '.$kredit->no_kontrak;
@@ -128,8 +164,41 @@ class ApproveController extends Controller
     public function pembayaran_tolak($id){
         //status 2 ditolak
         $pembayaran = Pembayaran::find($id);
+        $pelanggan = Pelanggan::find($pembayaran->pelanggan_id);
         $pembayaran->status = '2';
         $pembayaran->save();
+        $kredit = Kredit::join('kredit_details','kredit_details.kredit_id','kredits.id')
+                        ->join('barangs','barangs.id','kredits.barang_id')
+                        ->where('kredits.pelanggan_id','=',$pelanggan->id)
+                        ->where('kredits.sts','=','4')
+                        ->selectRaw('kredits.no_kontrak,kredit_details.cicilan,barangs.harga,kredit_details.lama_cicilan')
+                        ->first();
+        $cicilan = unserialize($kredit->cicilan);
+        $harga = $kredit->harga/$kredit->lama_cicilan;
+        $total = $cicilan[$pembayaran->angsuran_ke-1]+$harga;
+        $msg = 'Kami menolak pembayaran nomer kontrak '.$kredit->no_kontrak;
+        $number=$pelanggan->tlpn;
+        $deviceid = '109133';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://smsgateway.me/api/v4/message/send",
+          CURLOPT_SSL_VERIFYPEER=>false,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "[{\"phone_number\": \"$number\", \"message\": \"$msg\", \"device_id\": $deviceid}]",
+          CURLOPT_HTTPHEADER => array(
+            "Cache-Control: no-cache",
+            "Postman-Token: 0dfb5acc-f0ae-415b-a5d3-ca12a2dfdfd3",
+            "authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTU0OTE5NTQ2NCwiZXhwIjo0MTAyNDQ0ODAwLCJ1aWQiOjY3Njg2LCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.inoC3TujoLUGMHMuqo_zwEhNDm38i-5m_DGoXA4tB_A"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
         return redirect()->route('pembayaran.index');
     }
 }

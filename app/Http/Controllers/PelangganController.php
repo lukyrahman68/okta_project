@@ -22,6 +22,7 @@ class PelangganController extends Controller
         $pelanggan= Pelanggan::where('email','=',$request->email)->where('password','=',$request->password);
         $pelanggan2= Pelanggan::where('email','=',$request->email)->where('password','=',$request->password)->first();
         if ($pelanggan->count()) {
+            session(['nama' => $pelanggan2->nama]);
             session(['nik' => $pelanggan2->nik]);
             session(['id'=>$pelanggan2->id]);
             return redirect('halpelanggan');

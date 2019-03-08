@@ -5,7 +5,7 @@
 <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title" style="font-weight: bold">Responsive Hover Table</h3>
+        <h3 class="box-title" style="font-weight: bold">Input User Baru</h3>
         @isset($a)
             <div class="alert alert-success">
                 <div>Berhasil menambah karyawan</div>
@@ -30,6 +30,13 @@
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="is_owner" id="is_owner" class="form-control">
+                    <option value="0">Kasir</option>
+                    <option value="1">Owner</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="password">{{ __('Password') }}</label>

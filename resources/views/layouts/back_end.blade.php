@@ -58,7 +58,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{route('kredit.index')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>W</b>W</span>
       <!-- logo for regular state and mobile devices -->
@@ -76,13 +76,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="user-image" alt="User Image">
+              <!--<img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="user-image" alt="User Image">-->
               <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
-                <img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="img-circle" alt="User Image">
+             <li class="user-header">
+                <!--<img src="{{asset('images/users/'.Auth::user()->id.'/'.Auth::user()->img)}}" class="img-circle" alt="User Image">-->
 
                 <p>
                   {{Auth::user()->name}}
@@ -118,19 +118,74 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
-      <li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-th"></i>
+          <span>Customer</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{route('pelanggan.create')}}"><i class="fa fa-circle-o"></i>Tambah Customer </a></li>
+          <li><a href="{{route('pelanggan.index')}}"><i class="fa fa-circle-o"></i> Data Customer</a></li>
+        </ul>
+      </li>
+      <!--<li>
         <a href="{{route('pelanggan.index')}}">
-          <i class="fa fa-th"></i> <span>Pelanggan</span>
+          <i class="fa fa-th"></i> <span>Customer</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
         </a>
-      </li>
+      </li>-->
       <li class="treeview">
+        <a href="#">
+          <i class="fa fa-th"></i>
+          <span>Vendor</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{route('vendor.create')}}"><i class="fa fa-circle-o"></i>Tambah Vendor </a></li>
+          <li><a href="{{route('vendor.index')}}"><i class="fa fa-circle-o"></i> Data Vendor</a></li>
+        </ul>
+      </li>
+      <!--<li>
+        <a href="{{route('vendor.index')}}">
+          <i class="fa fa-th"></i> <span>Data Vendor</span>
+          <span class="pull-right-container">
+           <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
+      </li>-->
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-th"></i>
+          <span>Barang Vendor</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{route('barang.create')}}"><i class="fa fa-circle-o"></i>Tambah Barang Vendor </a></li>
+          <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> Data Barang Vendor</a></li>
+        </ul>
+      </li>
+      <!--<li>
+        <a href="{{route('barang.index')}}">
+          <i class="fa fa-th"></i> <span>Data Barang Vendor</span>
+          <span class="pull-right-container">
+           <small class="label pull-right bg-green">new</small>
+          </span>
+        </a>
+      </li>-->
+     <!-- <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
           <span>Vendor</span>
@@ -142,8 +197,32 @@
           <li><a href="{{route('vendor.index')}}"><i class="fa fa-circle-o"></i> Data Vendor</a></li>
           <li><a href="{{route('barang.index')}}"><i class="fa fa-circle-o"></i> Barang Vendor</a></li>
         </ul>
+      </li>-->
+      <li>
+        <a href="{{route('kredit.index')}}">
+          <i class="fa fa-pie-chart"></i> <span>Pengajuan Kredit Baru</span>
+          <span class="pull-right-container">
+            <!--<small class="fa fa-angle-left pull-right">new</small>-->
+          </span>
+        </a>
       </li>
-      <li class="treeview">
+      <li>
+        <a href="{{route('kredit.status')}}">
+          <i class="fa fa-pie-chart"></i> <span>Status Pengajuan Kredit</span>
+          <span class="pull-right-container">
+            <!--<small class="fa fa-angle-left pull-right">new</small>-->
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="{{route('kredit.history')}}">
+          <i class="fa fa-pie-chart"></i> <span>History Kredit</span>
+          <span class="pull-right-container">
+            <!--<small class="fa fa-angle-left pull-right">new</small>-->
+          </span>
+        </a>
+      </li>
+      <!--<li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
           <span>Pengajuan Kredit</span>
@@ -152,11 +231,11 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{route('kredit.index')}}"><i class="fa fa-circle-o"></i> Kredit Baru</a></li>
+          <li><a href="{{route('kredit.index')}}"><i class="fa fa-circle-o"></i> Pengajuan Kredit Baru</a></li>
           <li><a href="{{route('kredit.status')}}"><i class="fa fa-circle-o"></i> Status Pengajuan</a></li>
           <li><a href="{{route('kredit.history')}}"><i class="fa fa-circle-o"></i> History Kredit</a></li>
         </ul>
-      </li>
+      </li>-->
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
@@ -166,9 +245,17 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i> Pertanyaan</a></li>
+          <li><a href="{{route('survey.index')}}"><i class="fa fa-circle-o"></i> Pertanyaan Survey</a></li>
           <li><a href="{{route('survey.pertayaan')}}"><i class="fa fa-circle-o"></i> Kelola Survey</a></li>
         </ul>
+      </li>
+      <li>
+        <a href="{{route('notif.index')}}">
+          <i class="fa fa-pie-chart"></i> <span>Notifikasi Jatuh Tempo</span>
+          <span class="pull-right-container">
+            <!--<small class="fa fa-angle-left pull-right">new</small>-->
+          </span>
+        </a>
       </li>
       {{-- <li>
         <a href="{{route('survey.index')}}">
@@ -178,14 +265,14 @@
           </span>
         </a>
       </li> --}}
-      <li>
+      <!--<li>
         <a href="{{route('survey.index')}}">
           <i class="fa fa-th"></i> <span>Survey</span>
           <span class="pull-right-container">
             <small class="label pull-right bg-green">new</small>
           </span>
         </a>
-      </li>
+      </li>-->
       {{-- <li class="treeview">
         <a href="#">
           <i class="fa fa-laptop"></i>
@@ -570,6 +657,9 @@
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+
 @yield('script')
 <script>
         $(function () {
@@ -703,7 +793,7 @@
                 var tot_ang_baru = 0;
                 var harga_baru=harga;
                 if(bunga=='0'){
-                    
+
                     var cipok = parseInt(harga)/parseInt(cicilan);
                     var bu_hit = Math.ceil(parseInt(harga)*0.25/12);
                     var angsuran = parseInt(cipok)+parseInt(bu_hit);
@@ -741,6 +831,7 @@
                 today = mm + '/' + dd + '/' + yyyy;
                 $('<h3 id="jatuh_tempo">Tanggal Jatuh Tempo: '+today+' </h3>').appendTo($('#tgl'));
                 $('#proses_simpan').css('display','block');
+                $('#cmd').css('display','block');
 
                 // console.log('harga = '+harga);
                 // console.log('cicilan = '+cicilan);

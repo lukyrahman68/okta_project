@@ -23,5 +23,7 @@ class Pelanggan extends Model
         'sts',
         'img1',
         'img2',
+        'tlpn_keluarga',
+        'tlpn_keluarga2',
     ];
 }
